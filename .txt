@@ -1,0 +1,42 @@
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+let character = document.createElement("img");
+character.src = "./player.png";
+window.onload = function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let scrX = 0;
+  let scrY = 43;
+  let scrHeight = 36;
+  let scrWidth = 19;
+  let imageHeight = 80;
+  let imageWidth = 50;
+  let x = 100;
+  let y = 100;
+  let cols = 5;
+
+  function animatePlayer(scrX, scrY) {
+    ctx.drawImage(
+      character,
+      scrX,
+      scrY,
+      scrWidth,
+      scrHeight,
+      x,
+      y,
+      imageWidth,
+      imageHeight
+    );
+  }
+
+  function play() {
+    scrX = scrX + scrWidth;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (scrX > scrWidth * cols) scrX = 0;
+    animatePlayer(scrX, scrY);
+  }
+  setInterval(play, 100);
+};
