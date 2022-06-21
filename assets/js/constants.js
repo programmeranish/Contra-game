@@ -1,1 +1,1 @@
-const GRAVITY = 0.5;
+const GRAVITY = 0.2;

@@ -28,7 +28,9 @@ class Player {
     this.playerPosition.y += this.playerVelocity.y;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (this.playerPosition.y + this.playerSize.height >= canvas.height) {
-      this.playerPosition.y = canvas.height - this.playerSize.height;
+      this.playerVelocity.y = 0;
+    } else {
+      this.playerVelocity.y += GRAVITY;
     }
     this.drawPlayer();
   }
