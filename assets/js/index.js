@@ -8,12 +8,19 @@ let track = new Track({
   trackPosition: { x: 200, y: 200 },
   trackSize: { width: 200, height: 10 },
 });
+let track2 = new Track({
+  trackPosition: { x: 600, y: 300 },
+  trackSize: { width: 200, height: 10 },
+});
 
+// continouse play game
 function play() {
-  checkOnTrack(player, track);
+  checkOnTrack(player, [track, track2]);
+
   requestAnimationFrame(play);
   player.updatePosition();
   track.drawObstacle();
+  track2.drawObstacle();
 }
 play();
 

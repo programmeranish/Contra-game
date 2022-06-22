@@ -7,16 +7,21 @@ canvas.height = window.innerHeight;
 let playerSprite = document.createElement("img");
 playerSprite.src = "../images/player.png";
 
-function checkOnTrack(player, track) {
-  if (
-    player.playerPosition.x + player.playerSize.width >=
-      track.trackPosition.x &&
-    player.playerPosition.x <= track.trackPosition.x + track.trackSize.width &&
-    player.playerPosition.y + player.playerSize.height <= track.trackPosition.y
-  ) {
-    console.log("running", track.trackPosition.y);
-    player.baseLevel = track.trackPosition.y;
-  } else {
-    player.baseLevel = canvas.height;
-  }
+function checkOnTrack(player, allTrack = []) {
+  let onTrack = false;
+
+  allTrack.forEach((track) => {
+    if (
+      player.playerPosition.x + player.playerSize.width >=
+        track.trackPosition.x &&
+      player.playerPosition.x <=
+        track.trackPosition.x + track.trackSize.width &&
+      player.playerPosition.y + player.playerSize.height <=
+        track.trackPosition.y
+    ) {
+      onTrack = true;
+      player.onTrack = player.baseLevel = track.trackPosition.y;
+    }
+  });
+  if (!onTrack) player.baseLevel = canvas.height;
 }

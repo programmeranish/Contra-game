@@ -7,6 +7,7 @@ class Player {
     this.playerPosition = playerPosition;
     this.playerSize = playerSize;
     this.playerVelocity = playerVelocity;
+    this.onTrack = true;
     this.drawPlayer();
     this.move = {
       left: false,
