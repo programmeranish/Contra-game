@@ -33,6 +33,7 @@ class Player {
   checkGroundCollision() {
     if (this.playerPosition.y + this.playerSize.height >= this.baseLevel) {
       this.playerVelocity.y = 0;
+      this.playerPosition.y = this.baseLevel - this.playerSize.height;
       this.move.isJumping = false;
     } else {
       this.playerVelocity.y += GRAVITY;

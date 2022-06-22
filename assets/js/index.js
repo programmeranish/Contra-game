@@ -5,7 +5,7 @@ let player = new Player({
 });
 
 let track = new Track({
-  trackPosition: { x: 0, y: 200 },
+  trackPosition: { x: 200, y: 200 },
   trackSize: { width: 200, height: 10 },
 });
 
