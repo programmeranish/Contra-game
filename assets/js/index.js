@@ -4,9 +4,16 @@ let player = new Player({
   playerVelocity: { x: 0, y: 10 },
 });
 
+let track = new Track({
+  trackPosition: { x: 0, y: 200 },
+  trackSize: { width: 200, height: 10 },
+});
+
 function play() {
+  checkOnTrack(player, track);
   requestAnimationFrame(play);
   player.updatePosition();
+  track.drawObstacle();
 }
 play();
 

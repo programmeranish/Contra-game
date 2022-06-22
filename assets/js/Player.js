@@ -1,5 +1,9 @@
+var canvas = document.querySelector("canvas");
+var ctx = canvas.getContext("2d");
+
 class Player {
   constructor({ playerPosition, playerSize, playerVelocity }) {
+    this.baseLevel = canvas.height;
     this.playerPosition = playerPosition;
     this.playerSize = playerSize;
     this.playerVelocity = playerVelocity;
@@ -27,7 +31,7 @@ class Player {
   }
 
   checkGroundCollision() {
-    if (this.playerPosition.y + this.playerSize.height >= canvas.height) {
+    if (this.playerPosition.y + this.playerSize.height >= this.baseLevel) {
       this.playerVelocity.y = 0;
       this.move.isJumping = false;
     } else {
