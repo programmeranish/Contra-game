@@ -1,12 +1,3 @@
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let playerSprite = document.createElement("img");
-playerSprite.src = "../images/player.png";
-
 class Player {
   constructor({ playerPosition, playerSize, playerVelocity }) {
     this.playerPosition = playerPosition;
@@ -20,6 +11,7 @@ class Player {
       down: false,
       jump: false,
       shoot: false,
+      isJumping: false,
     };
   }
 
@@ -37,29 +29,50 @@ class Player {
   checkGroundCollision() {
     if (this.playerPosition.y + this.playerSize.height >= canvas.height) {
       this.playerVelocity.y = 0;
+      this.move.isJumping = false;
     } else {
       this.playerVelocity.y += GRAVITY;
     }
   }
-
-  move(){
-    if(this.move.left){
-      this.playerVelocity.x = -1
-  }else{
-    this.playerVelocity.x = 0;
+  moveLeft(status) {
+    if (status) this.move.left = true;
+    else this.move.left = false;
+    this.movePosition();
   }
+  moveRight(status) {
+    if (status) {
+      this.move.right = true;
+    } else {
+      this.move.right = false;
+    }
+    this.movePosition();
+  }
+  jump(status) {
+    if (status) {
+      if (!this.move.isJumping) {
+        this.move.isJumping = true;
+        this.playerVelocity.y = -JUMP_VALUE;
+      }
+    }
+  }
+  sleep(status) {}
 
-  updatePosition() {
-    this.playerPosition.x += this.playerVelocity.x;
-
-    this.playerPosition.y += this.playerVelocity.y;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    this.checkGroundCollision();
-    this.move();
+  movePosition() {
+    if (this.move.left) {
+      this.playerVelocity.x = -parseInt(PLAYER_SPEED);
+    } else if (this.move.right) {
+      this.playerVelocity.x = parseInt(PLAYER_SPEED);
+    } else {
+      this.playerVelocity.x = 0;
     }
 
-
+    this.updatePosition();
+  }
+  updatePosition() {
+    this.playerPosition.x += this.playerVelocity.x;
+    this.playerPosition.y += this.playerVelocity.y;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.checkGroundCollision();
     this.drawPlayer();
   }
 }

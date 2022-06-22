@@ -21,19 +21,24 @@ window.addEventListener("keydown", (event) => {
       break;
     }
     case "a": {
-      console.log("a");
+      console.log("moving left");
+      player.moveLeft(true);
+      player.movePosition();
       break;
     }
     case "d": {
-      console.log("d");
+      console.log("moving right");
+      player.moveRight(true);
       break;
     }
     case "k": {
-      console.log("k");
+      console.log("jump");
+      player.jump(true);
       break;
     }
     case "j": {
-      console.log("j");
+      console.log("shoot");
+      player.shoot();
       break;
     }
   }
@@ -50,11 +55,11 @@ window.addEventListener("keyup", (event) => {
       break;
     }
     case "a": {
-      console.log("a");
+      player.moveLeft(false);
       break;
     }
     case "d": {
-      console.log("d");
+      player.moveRight(false);
       break;
     }
     case "k": {
