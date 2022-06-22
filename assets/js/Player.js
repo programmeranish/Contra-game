@@ -13,7 +13,16 @@ class Player {
     this.playerSize = playerSize;
     this.playerVelocity = playerVelocity;
     this.drawPlayer();
+    this.move = {
+      left: false,
+      right: false,
+      up: false,
+      down: false,
+      jump: false,
+      shoot: false,
+    };
   }
+
   drawPlayer() {
     ctx.fillStyle = "red";
     ctx.fillRect(
@@ -24,14 +33,33 @@ class Player {
     );
     ctx.stroke();
   }
-  updatePosition() {
-    this.playerPosition.y += this.playerVelocity.y;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  checkGroundCollision() {
     if (this.playerPosition.y + this.playerSize.height >= canvas.height) {
       this.playerVelocity.y = 0;
     } else {
       this.playerVelocity.y += GRAVITY;
     }
+  }
+
+  move(){
+    if(this.move.left){
+      this.playerVelocity.x = -1
+  }else{
+    this.playerVelocity.x = 0;
+  }
+
+  updatePosition() {
+    this.playerPosition.x += this.playerVelocity.x;
+
+    this.playerPosition.y += this.playerVelocity.y;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    this.checkGroundCollision();
+    this.move();
+    }
+
+
     this.drawPlayer();
   }
 }
