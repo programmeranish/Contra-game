@@ -5,7 +5,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let playerSprite = document.createElement("img");
-playerSprite.src = "../images/player.png";
+playerSprite.src = "/assets/images/player.png";
 
 function checkOnTrack(player, allTrack = []) {
   let onTrack = false;
@@ -24,4 +24,8 @@ function checkOnTrack(player, allTrack = []) {
     }
   });
   if (!onTrack) player.baseLevel = canvas.height;
+}
+
+function drawImage({ image, sx, sy, sw, sh, dx, dy, dh, dw }) {
+  ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
 }

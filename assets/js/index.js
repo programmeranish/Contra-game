@@ -1,3 +1,4 @@
+// let backgroundImage = new Background();
 let player = new Player({
   playerPosition: { x: 0, y: 0 },
   playerSize: { width: 100, height: 100 },
@@ -21,6 +22,7 @@ function play() {
   player.updatePosition();
   track.drawObstacle();
   track2.drawObstacle();
+  // backgroundImage.drawBackground();
 }
 play();
 
