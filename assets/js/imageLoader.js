@@ -1,4 +1,4 @@
-var images = {};
+var imagesObj = {};
 let fetchedFlag = false;
 async function getImage(url) {
   let image = new Image();
@@ -12,14 +12,14 @@ async function getImage(url) {
 }
 async function loadImages() {
   for (let i = 0; i < IMAGES_NAMES.length; i++) {
-    let url = IMAGES_PATH + IMAGES_NAMES[i];
+    let url = IMAGES_PATH + IMAGES_NAMES[i] + ".png";
     let image = await getImage(url);
-    images = { ...images, [IMAGES_NAMES[i]]: image };
+    imagesObj = { ...imagesObj, [IMAGES_NAMES[i]]: image };
   }
 
   return new Promise((resolve, reject) => {
-    if (Object.keys(images).length === IMAGES_NAMES.length) {
-      resolve("loaded");
+    if (Object.keys(imagesObj).length === IMAGES_NAMES.length) {
+      resolve(imagesObj);
     }
   });
 }

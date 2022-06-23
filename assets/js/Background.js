@@ -3,13 +3,25 @@ var ctx = canvas.getContext("2d");
 
 class Background {
   constructor() {
-    this.image = this.getImage();
-    console.log(this.image, "asdfasdf");
+    this.backgroundImage = "";
   }
-  async getImage() {
-    this.image = await loadImage({ url: "/assets/images/background.png" });
+  drawBackground(loadedImages) {
+    this.backgroundImage = loadedImages["background"];
+    // ctx.drawImage(
+    //   this.backgroundImage,
+    //   0,
+    //   0,
+    //   400,
+    //   70,
+    //   0,
+    //   0,
+    //   canvas.width,
+    //   canvas.height
+    // );
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
-  drawBackground() {
-    ctx.drawImage(this.image, 0, 0, 100, 100, 0, 0, 300, 300);
+  clearScreen() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 }

@@ -1,42 +1,38 @@
-// let backgroundImage = new Background();
+var loadedImages = {};
+
+let backgroundImage = new Background();
 let player = new Player({
   playerPosition: { x: 0, y: 0 },
   playerSize: { width: 100, height: 100 },
   playerVelocity: { x: 0, y: 10 },
 });
 
-let track = new Track({
-  trackPosition: { x: 200, y: 200 },
-  trackSize: { width: 200, height: 10 },
-});
-let track2 = new Track({
-  trackPosition: { x: 600, y: 300 },
-  trackSize: { width: 200, height: 10 },
-});
+let tracks = new Track();
 class Gameplay {
   constructor() {}
-  playgame() {
-    checkOnTrack(player, [track, track2]);
-
+  playgame(loadedImages) {
+    backgroundImage.clearScreen();
+    backgroundImage.drawBackground(loadedImages);
     player.updatePosition();
-    track.drawObstacle();
-    track2.drawObstacle();
+    tracks.checkTracks();
   }
 }
 /*
 @game:starting new game and loop
 */
-function startGame() {
+function startGame(loadedImages) {
   let game = new Gameplay();
   function play() {
     requestAnimationFrame(play);
-    game.playgame();
+    game.playgame(loadedImages);
   }
   play();
 }
 
-loadImages().then(() => {
-  startGame();
+loadImages().then((imagesObj) => {
+  console.log(imagesObj, "this first");
+  loadedImages = imagesObj;
+  startGame(loadedImages);
 });
 
 //key down event

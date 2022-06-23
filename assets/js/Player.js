@@ -77,7 +77,6 @@ class Player {
   updatePosition() {
     this.playerPosition.x += this.playerVelocity.x;
     this.playerPosition.y += this.playerVelocity.y;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.checkGroundCollision();
     this.drawPlayer();
   }
