@@ -1,6 +1,6 @@
-var images = [];
-
-async function loadImage(url) {
+var images = {};
+let fetchedFlag = false;
+async function getImage(url) {
   let image = new Image();
   image.src = url;
 
@@ -10,14 +10,16 @@ async function loadImage(url) {
     };
   });
 }
-function getImages() {
-  IMAGES_NAMES.forEach(async (imageName) => {
-    let url = IMAGES_PATH + imageName;
-    let image = await loadImage(url);
-    images.push(image);
+async function loadImages() {
+  for (let i = 0; i < IMAGES_NAMES.length; i++) {
+    let url = IMAGES_PATH + IMAGES_NAMES[i];
+    let image = await getImage(url);
+    images = { ...images, [IMAGES_NAMES[i]]: image };
+  }
+
+  return new Promise((resolve, reject) => {
+    if (Object.keys(images).length === IMAGES_NAMES.length) {
+      resolve("loaded");
+    }
   });
-
-  return images;
 }
-
-console.log(getImages());
