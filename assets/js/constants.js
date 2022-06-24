@@ -7,4 +7,4 @@ const GRID_WIDTH = 60;
 const GRID_HEIGHT = 60;
 
 const IMAGES_PATH = "/assets/images/";
-const IMAGES_NAMES = ["background", "player"];
+const IMAGES_NAMES = ["player", "background"];

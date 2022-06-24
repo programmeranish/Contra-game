@@ -7,14 +7,15 @@ let player = new Player({
   playerVelocity: { x: 0, y: 10 },
 });
 
-let tracks = new Track();
+let trackObj = new Track();
 class Gameplay {
   constructor() {}
   playgame(loadedImages) {
     backgroundImage.clearScreen();
     backgroundImage.drawBackground(loadedImages);
+    trackObj.checkTracks();
+    checkOnTrack(player, trackObj);
     player.updatePosition();
-    tracks.checkTracks();
   }
 }
 /*

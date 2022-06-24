@@ -20,26 +20,43 @@ var ctx = canvas.getContext("2d");
 class Track {
   constructor() {
     this.track = [
-      [0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
     ];
   }
+
   checkTracks() {
-    for (let y = 0; y < 4; y++) {
-      for (let x = 0; x < 5; x++) {
+    for (let y = 0; y < this.track.length; y++) {
+      for (let x = 0; x < this.track[y].length; x++) {
         if (this.track[y][x] != 0) {
-          let trackPosition = { x: x * GRID_WIDTH, y: y * GRID_HEIGHT };
-          let trackType = this.track[y][x];
-          this.drawTrack({ trackPosition, trackType });
+          switch (this.track[y][x]) {
+            case 1: {
+              let trackPosition = { x: x * GRID_WIDTH, y: y * GRID_HEIGHT };
+              let trackType = this.track[y][x];
+              this.drawTrack({
+                trackPosition,
+                trackType: IMAGES_NAMES[trackType],
+              });
+            }
+          }
         }
       }
     }
   }
   drawTrack({ trackPosition, trackType }) {
     ctx.drawImage(
-      imagesObj["background"],
+      imagesObj[trackType],
       100,
       100,
       60,
@@ -49,6 +66,5 @@ class Track {
       60,
       60
     );
-    console.log(trackPosition);
   }
 }
