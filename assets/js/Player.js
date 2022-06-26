@@ -1,5 +1,6 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
+let trackPassVelocity = 0; //for movement of track forward
 
 let playerPicture = {
   running: { sx: 0, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
@@ -83,10 +84,19 @@ class Player {
     } else {
       this.playerVelocity.x = 0;
     }
-
-    this.updatePosition();
   }
-  updatePosition() {
+  updatePosition(trackObj) {
+    if (this.move.right) {
+      if (this.playerPosition.x + this.playerSize.width >= canvas.width / 3) {
+        this.playerVelocity.x = 0;
+        if (trackPassVelocity % 60 === 0) {
+          trackObj.moveForward();
+        }
+        trackPassVelocity += 8;
+      } else {
+        this.playerVelocity.x = PLAYER_SPEED;
+      }
+    }
     this.playerPosition.x += this.playerVelocity.x;
     this.playerPosition.y += this.playerVelocity.y;
     this.checkGroundCollision();
