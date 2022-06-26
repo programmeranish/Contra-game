@@ -1,6 +1,10 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 
+let playerPicture = {
+  running: { sx: 0, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
+};
+
 class Player {
   constructor({ playerPosition, playerSize, playerVelocity }) {
     this.baseLevel = canvas.height;
@@ -33,12 +37,7 @@ class Player {
     //   100
     // );
     ctx.fillStyle = "red";
-    ctx.fillRect(
-      this.playerPosition.x,
-      this.playerPosition.y,
-      this.playerSize.width,
-      this.playerSize.height
-    );
+    ctx.fillRect(this.playerPosition.x, this.playerPosition.y, this.playerSize.width, this.playerSize.height);
     ctx.stroke();
   }
 
@@ -66,7 +65,9 @@ class Player {
   }
   jump(status) {
     if (status) {
-      if (!this.move.isJumping) {
+      if (this.move.down) {
+        this.playerPosition.y += 1;
+      } else if (!this.move.isJumping) {
         this.move.isJumping = true;
         this.playerVelocity.y = -JUMP_VALUE;
       }

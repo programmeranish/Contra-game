@@ -1,3 +1,6 @@
+var canvas = document.querySelector("canvas");
+var ctx = canvas.getContext("2d");
+
 class Gameplay {
   constructor() {
     this.backgroundImage = new Background();
@@ -7,7 +10,7 @@ class Gameplay {
       playerVelocity: { x: 0, y: 10 },
     });
     this.trackObj = new Track();
-
+    this.moveDistance = 0;
     //key down event
     window.addEventListener("keydown", (event) => {
       switch (event.key) {
@@ -16,6 +19,7 @@ class Gameplay {
         }
         case "s": {
           console.log("s");
+          this.player.move.down = true;
           break;
         }
         case "a": {
@@ -25,8 +29,13 @@ class Gameplay {
           break;
         }
         case "d": {
-          console.log("moving right");
-          this.player.moveRight(true);
+          if (this.player.playerPosition.x <= canvas.width / 2) {
+            console.log("moving right");
+            this.player.moveRight(true);
+          } else {
+            this.moveDistance += 5;
+            if (this.moveDistance % 60 === 0) this.trackObj.moveForward();
+          }
           break;
         }
         case "k": {
@@ -50,6 +59,7 @@ class Gameplay {
         }
         case "s": {
           console.log("s");
+          this.player.move.down = false;
           break;
         }
         case "a": {
