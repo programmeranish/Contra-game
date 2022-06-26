@@ -5,7 +5,7 @@ class Background {
   constructor() {
     this.backgroundImage = "";
   }
-  drawBackground(loadedImages) {
+  drawBackground() {
     this.backgroundImage = loadedImages["background"];
     // ctx.drawImage(
     //   this.backgroundImage,

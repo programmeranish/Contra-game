@@ -21,6 +21,17 @@ class Player {
   }
 
   drawPlayer() {
+    // ctx.drawImage(
+    //   loadedImages["player"],
+    //   100,
+    //   100,
+    //   100,
+    //   100,
+    //   100,
+    //   100,
+    //   100,
+    //   100
+    // );
     ctx.fillStyle = "red";
     ctx.fillRect(
       this.playerPosition.x,
