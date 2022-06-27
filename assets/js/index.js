@@ -6,7 +6,7 @@ class Gameplay {
     this.backgroundImage = new Background();
     this.player = new Player({
       playerPosition: { x: 0, y: 0 },
-      playerSize: { width: 100, height: 100 },
+      playerSize: { width: 50, height: 80 },
       playerVelocity: { x: 0, y: 10 },
     });
     this.trackObj = new Track();
@@ -15,6 +15,7 @@ class Gameplay {
     window.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "w": {
+          this.player.move.up = true;
           break;
         }
         case "s": {
@@ -50,6 +51,7 @@ class Gameplay {
     window.addEventListener("keyup", (event) => {
       switch (event.key) {
         case "w": {
+          this.player.move.up = false;
           break;
         }
         case "s": {
@@ -71,6 +73,7 @@ class Gameplay {
         }
         case "j": {
           console.log("j");
+          this.player.shoot(false);
           break;
         }
       }
