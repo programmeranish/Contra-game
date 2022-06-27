@@ -74,6 +74,10 @@ class Player {
       }
     }
   }
+  shoot(status) {
+    if (status) {
+    }
+  }
   sleep(status) {}
 
   movePosition() {
@@ -87,14 +91,19 @@ class Player {
   }
   updatePosition(trackObj) {
     if (this.move.right) {
-      if (this.playerPosition.x + this.playerSize.width >= canvas.width / 3) {
-        this.playerVelocity.x = 0;
-        if (trackPassVelocity % 60 === 0) {
-          trackObj.moveForward();
+      //checking if the track is not end so that it can move forward
+      if ((trackObj.track[0].length - 1) * GRID_WIDTH >= canvas.width) {
+        //if track is there width of screen /3 and the track moves forward
+        if (this.playerPosition.x + this.playerSize.width >= canvas.width / 3) {
+          this.playerVelocity.x = 0;
+          //stopping player to continuosly calling forward breaking it with track pass velocity
+          if (trackPassVelocity % GRID_WIDTH === 0) {
+            trackObj.moveForward();
+          }
+          trackPassVelocity += 20;
+        } else {
+          this.playerVelocity.x = PLAYER_SPEED;
         }
-        trackPassVelocity += 20;
-      } else {
-        this.playerVelocity.x = PLAYER_SPEED;
       }
     }
     this.playerPosition.x += this.playerVelocity.x;

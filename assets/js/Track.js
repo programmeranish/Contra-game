@@ -64,14 +64,11 @@ class Track {
     for (let y = 0; y < this.track.length; y++) {
       if (this.shiftTrack >= 60) {
         this.track[y].shift();
-        console.log("shifting all");
       }
     }
     if (this.shiftTrack < 60) {
       this.shiftTrack += this.shiftTrackBy;
-      console.log("this shift track", this.shiftTrack);
     } else {
-      console.log("reseting shift track");
       this.shiftTrack = 0;
     }
   }

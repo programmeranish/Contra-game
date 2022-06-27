@@ -40,7 +40,7 @@ class Gameplay {
         }
         case "j": {
           console.log("shoot");
-          this.player.shoot();
+          this.player.shoot(true);
           break;
         }
       }
