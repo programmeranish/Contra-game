@@ -92,7 +92,7 @@ class Player {
         if (trackPassVelocity % 60 === 0) {
           trackObj.moveForward();
         }
-        trackPassVelocity += 8;
+        trackPassVelocity += 20;
       } else {
         this.playerVelocity.x = PLAYER_SPEED;
       }

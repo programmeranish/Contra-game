@@ -42,6 +42,8 @@ class Track {
     8:water
     9:wall
     */
+    this.shiftTrack = 0;
+    this.shiftTrackBy = 6;
     this.track = [
       [0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -60,14 +62,31 @@ class Track {
   }
   moveForward() {
     for (let y = 0; y < this.track.length; y++) {
-      this.track[y].shift();
+      if (this.shiftTrack >= 60) {
+        this.track[y].shift();
+        console.log("shifting all");
+      }
+    }
+    if (this.shiftTrack < 60) {
+      this.shiftTrack += this.shiftTrackBy;
+      console.log("this shift track", this.shiftTrack);
+    } else {
+      console.log("reseting shift track");
+      this.shiftTrack = 0;
     }
   }
+  // if (this.shiftTrack <= 60) {
+  //   this.shiftTrack += this.shiftTrackBy;
+  // } else {
+  //   this.track[y].shift();
+  //   this.shiftTrack = 0;
+  // }
   checkTracks() {
     for (let y = 0; y < this.track.length; y++) {
       for (let x = 0; x < this.track[y].length; x++) {
         if (this.track[y][x] != 0) {
-          let trackPosition = { x: x * GRID_WIDTH, y: y * GRID_HEIGHT };
+          let trackPosition = { x: x * GRID_WIDTH - this.shiftTrack, y: y * GRID_HEIGHT };
+
           switch (this.track[y][x]) {
             case 1: {
               this.drawTrack({
