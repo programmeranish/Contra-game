@@ -1,6 +1,7 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 let trackPassVelocity = 0; //for movement of track forward
+let adjustHeightBullet = 20; //for adjusting bullet height for accurate bullet while shooting
 
 let playerPicture = {
   running: { sx: 0, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
@@ -19,14 +20,14 @@ let playerPicture = {
   reverseWater: { sx: 311, sy: 280, sh: 36, sw: 19, dh: 80, dw: 50, cols: 1 },
 };
 let shootBulletDirection = {
-  right: { dx: 1, dy: 0 },
-  left: { dx: -1, dy: 0 },
-  up: { dx: 0, dy: -1 },
-  down: { dx: 0, dy: 1 },
-  rightUp: { dx: 1, dy: -1 },
-  rightDown: { dx: 1, dy: 1 },
-  leftUp: { dx: -1, dy: -1 },
-  leftDown: { dx: -1, dy: 1 },
+  right: { dx: 1, dy: 0, sx: 352, sy: 0 },
+  left: { dx: -1, dy: 0, sx: 352, sy: 0 },
+  up: { dx: 0, dy: -1, sx: 352, sy: 0 },
+  down: { dx: 0, dy: 1, sx: 352, sy: 0 },
+  rightUp: { dx: 1, dy: -1, sx: 352, sy: 10 },
+  rightDown: { dx: 1, dy: 1, sx: 352, sy: -7 },
+  leftUp: { dx: -1, dy: -1, sx: 352, sy: 10 },
+  leftDown: { dx: -1, dy: 1, sx: 352, sy: -7 },
 };
 let fpsCount = 0;
 let shiftRight = 0;
@@ -36,8 +37,8 @@ let shiftUp = 0;
 let shootShiftRight = 0;
 let shootShiftLeft = 0;
 
-function createNewBullet(x, y, { dx, dy }) {
-  return new Bullet(x, y, dx, dy);
+function createNewBullet(x, y, { dx, dy, sx, sy }) {
+  return new Bullet(x, y, sx, sy, dx, dy);
 }
 
 class Player {
@@ -215,15 +216,15 @@ class Player {
     if (status) {
       this.move.shoot = true;
       if (this.move.down && this.move.right) {
-        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.rightDown));
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y + adjustHeightBullet, shootBulletDirection.rightDown));
       } else if (this.move.down && this.move.left) {
-        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.leftDown));
+        bullets.push(createNewBullet(this.playerPosition.x - this.playerSize.width, this.playerPosition.y + adjustHeightBullet, shootBulletDirection.leftDown));
       } else if (this.move.up && this.move.left) {
-        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.leftUp));
+        bullets.push(createNewBullet(this.playerPosition.x - this.playerSize.width, this.playerPosition.y - adjustHeightBullet, shootBulletDirection.leftUp));
       } else if (this.move.up && this.move.right) {
-        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.rightUp));
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y - adjustHeightBullet, shootBulletDirection.rightUp));
       } else if (this.move.lastDirection == "left") {
-        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.left));
+        bullets.push(createNewBullet(this.playerPosition.x - this.playerSize.width, this.playerPosition.y, shootBulletDirection.left));
       } else if (this.move.up) {
         bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.up));
       } else if (this.move.down) {
@@ -261,7 +262,7 @@ class Player {
           if (trackPassVelocity % GRID_WIDTH === 0) {
             trackObj.moveForward();
           }
-          trackPassVelocity += 20;
+          trackPassVelocity += adjustHeightBullet;
         } else {
           this.playerVelocity.x = PLAYER_SPEED;
         }

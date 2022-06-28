@@ -2,9 +2,10 @@ var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 
 class Bullet {
-  constructor(x, y, dx, dy) {
+  constructor(x, y, sx, sy, dx, dy) {
     this.bulletPosition = { x, y };
     this.bulletDirection = { dx, dy };
+    this.bulletSourceImage = { sx, sy };
     this.bulletSpeed = 4;
     this.bulletSize = { height: 50, width: 50 };
     this.drawBullet();
@@ -23,7 +24,7 @@ class Bullet {
     }
   }
   drawBullet() {
-    ctx.drawImage(loadedImages["player"], 352, 0, 10, 20, this.bulletPosition.x, this.bulletPosition.y, this.bulletSize.width, this.bulletSize.height);
+    ctx.drawImage(loadedImages["player"], this.bulletSourceImage.sx, this.bulletSourceImage.sy, 10, 20, this.bulletPosition.x, this.bulletPosition.y, this.bulletSize.width, this.bulletSize.height);
   }
   updatePosition() {
     console.log(this.bulletPosition.x);
