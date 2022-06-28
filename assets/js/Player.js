@@ -18,6 +18,16 @@ let playerPicture = {
   water: { sx: 86, sy: 280, sh: 36, sw: 19, dh: 80, dw: 50, cols: 1 },
   reverseWater: { sx: 311, sy: 280, sh: 36, sw: 19, dh: 80, dw: 50, cols: 1 },
 };
+let shootBulletDirection = {
+  right: { dx: 1, dy: 0 },
+  left: { dx: -1, dy: 0 },
+  up: { dx: 0, dy: -1 },
+  down: { dx: 0, dy: 1 },
+  rightUp: { dx: 1, dy: -1 },
+  rightDown: { dx: 1, dy: 1 },
+  leftUp: { dx: -1, dy: -1 },
+  leftDown: { dx: -1, dy: 1 },
+};
 let fpsCount = 0;
 let shiftRight = 0;
 let shiftLeft = 0;
@@ -25,6 +35,10 @@ let shiftDown = 0;
 let shiftUp = 0;
 let shootShiftRight = 0;
 let shootShiftLeft = 0;
+
+function createNewBullet(x, y, { dx, dy }) {
+  return new Bullet(x, y, dx, dy);
+}
 
 class Player {
   constructor({ playerPosition, playerSize, playerVelocity }) {
@@ -201,21 +215,25 @@ class Player {
     if (status) {
       this.move.shoot = true;
       if (this.move.down && this.move.right) {
-        console.log("shoot down right");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.rightDown));
       } else if (this.move.down && this.move.left) {
-        console.log("shoot down left");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.leftDown));
       } else if (this.move.up && this.move.left) {
-        console.log("shoot up left");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.leftUp));
       } else if (this.move.up && this.move.right) {
-        console.log("shootupp right");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.rightUp));
+      } else if (this.move.lastDirection == "left") {
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.left));
       } else if (this.move.up) {
-        console.log("shoot up");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.up));
       } else if (this.move.down) {
-        console.log("shoot down");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.down));
       } else if (this.move.right) {
-        console.log("shoot right");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.right));
       } else if (this.move.left) {
-        console.log("shoot left");
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.left));
+      } else {
+        bullets.push(createNewBullet(this.playerPosition.x + this.playerSize.width, this.playerPosition.y, shootBulletDirection.right));
       }
     } else {
       this.move.shoot = false;

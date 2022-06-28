@@ -1,6 +1,6 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
-
+var bullets = [];
 class Gameplay {
   constructor() {
     this.backgroundImage = new Background();
@@ -10,6 +10,7 @@ class Gameplay {
       playerVelocity: { x: 0, y: 10 },
     });
     this.trackObj = new Track();
+
     this.moveDistance = 0;
     //key down event
     window.addEventListener("keydown", (event) => {
@@ -79,10 +80,25 @@ class Gameplay {
       }
     });
   }
+  //continuous looop of the game on request animation frame
   playgame() {
     this.backgroundImage.clearScreen();
     this.backgroundImage.drawBackground();
+
     this.trackObj.checkTracks();
+    //filtering bullets out of the view
+    bullets = bullets.filter((bulletObj) => {
+      if (!bulletObj.checkOutOfBox()) {
+        return bulletObj;
+      } else {
+        bulletObj.deleteBullet();
+      }
+    });
+    bullets.forEach((bullet) => {
+      bullet.updatePosition();
+      bullet.drawBullet();
+    });
+
     checkOnTrack(this.player, this.trackObj);
     this.player.updatePosition(this.trackObj);
   }
