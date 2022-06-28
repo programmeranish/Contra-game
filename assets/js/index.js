@@ -1,14 +1,16 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 var bullets = [];
+var enemies = [];
+
 class Gameplay {
   constructor() {
     this.backgroundImage = new Background();
     this.player = new Player({
-      playerPosition: { x: 0, y: 0 },
-      playerSize: { width: 50, height: 80 },
-      playerVelocity: { x: 0, y: 10 },
+      position: { x: 0, y: 0 },
+      size: { width: 50, height: 80 },
     });
+    enemies.push(new Enemy());
     this.trackObj = new Track();
 
     this.moveDistance = 0;
@@ -85,11 +87,25 @@ class Gameplay {
     this.backgroundImage.clearScreen();
     this.backgroundImage.drawBackground();
 
+    //creating tracks
     this.trackObj.checkTracks();
     //filtering bullets out of the view
     bullets = bullets.filter((bulletObj) => {
       if (!bulletObj.checkOutOfBox()) {
-        return bulletObj;
+        //if inside bullet check collision with enemies
+        let singleBullet = null;
+        if (enemies.length === 0) {
+          singleBullet = bulletObj;
+        }
+        enemies = enemies.filter((enemy) => {
+          if (checkBulletCollision(bulletObj, enemy)) {
+            return null;
+          } else {
+            singleBullet = bulletObj;
+            return enemy;
+          }
+        });
+        return singleBullet;
       } else {
         bulletObj.deleteBullet();
       }
@@ -101,6 +117,13 @@ class Gameplay {
 
     checkOnTrack(this.player, this.trackObj);
     this.player.updatePosition(this.trackObj);
+    enemies.forEach((enemy) => {
+      if (checkEnemyCollision(this.player, enemy)) {
+        console.log("collided");
+      }
+      checkOnTrack(enemy, this.trackObj);
+      enemy.updatePosition(this.trackObj);
+    });
   }
 }
 /*
