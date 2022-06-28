@@ -20,6 +20,16 @@ function checkOnTrack(player, trackObj) {
         //checking if the player is above the road with player x,y, and road x,y
         if (player.playerPosition.x + player.playerSize.width >= trackPosition.x && player.playerPosition.x <= trackPosition.x + GRID_WIDTH && player.playerPosition.y + player.playerSize.height <= trackPosition.y && player.playerPosition.y + player.playerSize.height >= trackPosition.y - GRID_HEIGHT) {
           onTrack = true;
+          player.move.onWater = false;
+          player.baseLevel = trackPosition.y;
+        }
+      } else if (trackObj.track[y][x] === 8) {
+        //calculating the position of the road
+        let trackPosition = { x: x * GRID_WIDTH - trackObj.shiftTrack, y: y * GRID_HEIGHT };
+        //checking if the player is above the road with player x,y, and road x,y
+        if (player.playerPosition.x + player.playerSize.width >= trackPosition.x && player.playerPosition.x <= trackPosition.x + GRID_WIDTH && player.playerPosition.y + player.playerSize.height <= trackPosition.y && player.playerPosition.y + player.playerSize.height >= trackPosition.y - GRID_HEIGHT / 2) {
+          onTrack = true;
+          player.move.onWater = true;
           player.baseLevel = trackPosition.y;
         }
       }

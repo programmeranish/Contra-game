@@ -7,7 +7,6 @@ let playerPicture = {
   runningReverse: { sx: 397, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
   runningShoot: { sx: 0, sy: 114, sh: 36, sw: 24, dh: 80, dw: 50, cols: 3 },
   runningReverseShoot: { sx: 391, sy: 114, sh: 36, sw: 24, dh: 80, dw: 50, cols: 3 },
-
   downRight: { sx: 0, sy: 255, sh: 36, sw: 22, dh: 80, dw: 50, cols: 3 },
   downLeft: { sx: 397, sy: 255, sh: 36, sw: 22, dh: 80, dw: 50, cols: 3 },
   upRight: { sx: 0, sy: 185, sh: 36, sw: 19, dh: 80, dw: 50, cols: 3 },
@@ -16,6 +15,8 @@ let playerPicture = {
   sleepDownLeft: { sx: 305, sy: 5, sh: 36, sw: 30, dh: 80, dw: 50, cols: 1 },
   sleepDownRight: { sx: 81, sy: 5, sh: 36, sw: 30, dh: 80, dw: 50, cols: 1 },
   jump: { sx: 116, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 4 },
+  water: { sx: 86, sy: 280, sh: 36, sw: 19, dh: 80, dw: 50, cols: 1 },
+  reverseWater: { sx: 311, sy: 280, sh: 36, sw: 19, dh: 80, dw: 50, cols: 1 },
 };
 let fpsCount = 0;
 let shiftRight = 0;
@@ -41,11 +42,18 @@ class Player {
       shoot: false,
       isJumping: false,
       lastDirection: "right",
+      onWater: false,
     };
     this.drawPlayer();
   }
   drawPlayer() {
-    if (this.move.down && this.move.right) {
+    if (this.move.onWater && this.move.lastDirection === "right") {
+      let { water } = playerPicture;
+      ctx.drawImage(loadedImages["player"], water.sx, water.sy, water.sw, water.sh, this.playerPosition.x, this.playerPosition.y, this.playerSize.width, this.playerSize.height);
+    } else if (this.move.onWater && this.move.lastDirection === "left") {
+      let { reverseWater } = playerPicture;
+      ctx.drawImage(loadedImages["playerreverse"], reverseWater.sx, reverseWater.sy, reverseWater.sw, reverseWater.sh, this.playerPosition.x, this.playerPosition.y, this.playerSize.width, this.playerSize.height);
+    } else if (this.move.down && this.move.right) {
       let { downRight } = playerPicture;
       if (fpsCount % 10 === 0) {
         shiftRight += downRight.sw;
