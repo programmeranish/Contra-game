@@ -11,6 +11,8 @@ class Gameplay {
       size: { width: 50, height: 80 },
     });
     enemies.push(new Enemy());
+    this.blast = new Blast({ position: { x: 50, y: 0 }, size: { height: 50, width: 50 } });
+
     this.trackObj = new Track();
 
     this.moveDistance = 0;
@@ -82,11 +84,15 @@ class Gameplay {
       }
     });
   }
+
+  /*continuouse loop running for the game
+  @playgame()=> the game is playing
+
   //continuous looop of the game on request animation frame
+  */
   playgame() {
     this.backgroundImage.clearScreen();
     this.backgroundImage.drawBackground();
-
     //creating tracks
     this.trackObj.checkTracks();
     //filtering bullets out of the view
@@ -114,7 +120,6 @@ class Gameplay {
       bullet.updatePosition();
       bullet.drawBullet();
     });
-
     checkOnTrack(this.player, this.trackObj);
     this.player.updatePosition(this.trackObj);
     enemies.forEach((enemy) => {
@@ -124,6 +129,7 @@ class Gameplay {
       checkOnTrack(enemy, this.trackObj);
       enemy.updatePosition(this.trackObj);
     });
+    this.blast.drawBlast();
   }
 }
 /*
