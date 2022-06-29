@@ -13,15 +13,31 @@ class Enemy {
     this.baseLevel = canvas.height;
 
     this.enemyType = { 1: "shooting", 2: "running", 3: "bot" };
-    this.move = { left: false, right: false, up: false, down: false, lastDirection: "left", onWater: false };
+    this.move = {
+      left: false,
+      right: false,
+      up: false,
+      down: false,
+      lastDirection: "left",
+      onWater: false,
+    };
     this.shift = { right: 0, left: 0 };
     this.fpsCount = 0;
   }
   drawEnemy() {
     if (this.move.left) {
-      console.log(this.shift.left);
       let { runningReverse } = enemyPicture;
-      ctx.drawImage(loadedImages["playerreverse"], runningReverse.sx + this.shift.left, runningReverse.sy, runningReverse.sw, runningReverse.sh, this.position.x, this.position.y, this.size.width, this.size.height);
+      ctx.drawImage(
+        loadedImages["playerreverse"],
+        runningReverse.sx + this.shift.left,
+        runningReverse.sy,
+        runningReverse.sw,
+        runningReverse.sh,
+        this.position.x,
+        this.position.y,
+        this.size.width,
+        this.size.height
+      );
       if (this.fpsCount % 10 === 0) {
         this.shift.left -= runningReverse.sw;
         if (this.shift.left < -runningReverse.sw * runningReverse.cols) {
@@ -37,11 +53,31 @@ class Enemy {
           this.shift.right = 0;
         }
       }
-      ctx.drawImage(loadedImages["player"], running.sx + this.shift.right, running.sy, running.sw, running.sh, this.position.x, this.position.y, this.size.width, this.size.height);
+      ctx.drawImage(
+        loadedImages["player"],
+        running.sx + this.shift.right,
+        running.sy,
+        running.sw,
+        running.sh,
+        this.position.x,
+        this.position.y,
+        this.size.width,
+        this.size.height
+      );
       this.fpsCount++;
     } else {
       let { watch } = enemyPicture;
-      ctx.drawImage(loadedImages["playerreverse"], watch.sx, watch.sy, watch.sw, watch.sh, this.position.x, this.position.y, this.size.width, this.size.height);
+      ctx.drawImage(
+        loadedImages["playerreverse"],
+        watch.sx,
+        watch.sy,
+        watch.sw,
+        watch.sh,
+        this.position.x,
+        this.position.y,
+        this.size.width,
+        this.size.height
+      );
     }
   }
   updatePositionEnemy() {}
@@ -69,7 +105,6 @@ class Enemy {
     this.drawEnemy();
   }
   deleteEnemy() {
-    console.log("deleted");
     delete this;
   }
 }

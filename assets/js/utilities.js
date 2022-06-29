@@ -9,25 +9,60 @@ canvas.height = window.innerHeight;
 let playerSprite = document.createElement("img");
 playerSprite.src = "/assets/images/player.png";
 
+function createEnemyBot(trackObj) {
+  for (let y = 0; y < trackObj.track.length; y++) {
+    for (let x = 0; x < trackObj.track[y].length; x++) {
+      let trackPosition = {
+        x: x * GRID_WIDTH - trackObj.shiftTrack,
+        y: y * GRID_HEIGHT,
+      };
+
+      if (trackObj.track[y][x] === 6) {
+        enemyBots.push(
+          new EnemyBot({ position: trackPosition, arrayPosition: { x, y } })
+        );
+      }
+    }
+  }
+}
 function checkOnTrack(player, trackObj) {
   //onTrack for checking if player is above the track or not if not player base will be ground
   let onTrack = false;
   for (let y = 0; y < trackObj.track.length; y++) {
     for (let x = 0; x < trackObj.track[y].length; x++) {
+      let trackPosition = {
+        x: x * GRID_WIDTH - trackObj.shiftTrack,
+        y: y * GRID_HEIGHT,
+      };
       if (trackObj.track[y][x] === 1) {
         //calculating the position of the road
-        let trackPosition = { x: x * GRID_WIDTH - trackObj.shiftTrack, y: y * GRID_HEIGHT };
+
         //checking if the player is above the road with player x,y, and road x,y
-        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT) {
+        if (
+          player.position.x + player.size.width >= trackPosition.x &&
+          player.position.x <= trackPosition.x + GRID_WIDTH &&
+          player.position.y + player.size.height <= trackPosition.y &&
+          player.position.y + player.size.height >=
+            trackPosition.y - GRID_HEIGHT
+        ) {
           onTrack = true;
           player.move.onWater = false;
           player.baseLevel = trackPosition.y;
         }
       } else if (trackObj.track[y][x] === 8) {
         //calculating the position of the road
-        let trackPosition = { x: x * GRID_WIDTH - trackObj.shiftTrack, y: y * GRID_HEIGHT };
+        let trackPosition = {
+          x: x * GRID_WIDTH - trackObj.shiftTrack,
+          y: y * GRID_HEIGHT,
+        };
         //checking if the player is above the road with player x,y, and road x,y
-        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT / 2) {
+        if (
+          player.position.x + player.size.width >= trackPosition.x &&
+          player.position.x <= trackPosition.x + GRID_WIDTH &&
+          player.position.y + player.size.height <= trackPosition.y &&
+          player.position.y + player.size.height >=
+            trackPosition.y - GRID_HEIGHT / 2
+        ) {
           onTrack = true;
           player.move.onWater = true;
           player.baseLevel = trackPosition.y;

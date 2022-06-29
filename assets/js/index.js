@@ -2,6 +2,8 @@ var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 var bullets = [];
 var enemies = [];
+var blasts = [];
+var enemyBots = [];
 
 class Gameplay {
   constructor() {
@@ -11,7 +13,6 @@ class Gameplay {
       size: { width: 50, height: 80 },
     });
     enemies.push(new Enemy());
-    this.blast = new Blast({ position: { x: 50, y: 0 }, size: { height: 50, width: 50 } });
 
     this.trackObj = new Track();
 
@@ -103,8 +104,25 @@ class Gameplay {
         if (enemies.length === 0) {
           singleBullet = bulletObj;
         }
+
+        enemyBots.forEach((enemyBot) => {
+          if (checkBulletCollision(bulletObj, enemyBot)) {
+            enemyBot.shoted();
+            console.log("shooted bot");
+            singleBullet = null;
+          }
+        });
         enemies = enemies.filter((enemy) => {
           if (checkBulletCollision(bulletObj, enemy)) {
+            blasts.push(
+              new Blast({
+                position: { x: enemy.position.x, y: enemy.position.y },
+                size: { height: 50, width: 50 },
+              })
+            );
+            setTimeout(() => {
+              blasts.shift();
+            }, 500);
             return null;
           } else {
             singleBullet = bulletObj;
@@ -129,7 +147,16 @@ class Gameplay {
       checkOnTrack(enemy, this.trackObj);
       enemy.updatePosition(this.trackObj);
     });
-    this.blast.drawBlast();
+
+    //drawing bot
+    enemyBots.forEach((enemyBot) => {
+      enemyBot.drawBot();
+    });
+
+    //drawing black
+    blasts.forEach((blast) => {
+      blast.drawBlast();
+    });
   }
 }
 /*
