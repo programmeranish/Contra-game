@@ -6,22 +6,22 @@ let enemyPicture = {
   watch: { sx: 190, sy: 7, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
 };
 class Enemy {
-  constructor() {
+  constructor({ enemyType }) {
     this.id = "enemy";
     this.position = { x: 220, y: 0 };
     this.size = { height: 80, width: 50 };
     this.velocity = { x: 0, y: 10 };
     this.baseLevel = canvas.height;
-
-    this.enemyType = { 1: "shooting", 2: "running", 3: "bot" };
     this.move = {
-      left: false,
+      left: true,
       right: false,
       up: false,
       down: false,
       lastDirection: "left",
       onWater: false,
     };
+    this.enemyType = enemyType;
+
     this.shift = { right: 0, left: 0 };
     this.fpsCount = 0;
   }
@@ -51,7 +51,7 @@ class Enemy {
       ctx.drawImage(loadedImages["playerreverse"], watch.sx, watch.sy, watch.sw, watch.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     }
   }
-  updatePositionEnemy() {}
+
   checkGroundCollision() {
     if (this.position.y + this.size.height >= this.baseLevel) {
       this.velocity.y = 0;
@@ -69,10 +69,50 @@ class Enemy {
       this.velocity.x = 0;
     }
   }
-  updatePosition(trackObj) {
+  checkWallCollision() {
+    if (this.position.x <= 0) {
+      this.move.left = false;
+      this.move.right = true;
+    }
+  }
+  shootPlayer(playerObj) {
+    if (this.enemyType === "runningShoot") {
+      if (this.fpsCount % 100 === 0) {
+        console.log(this.enemyType);
+        if (measureDistance(this.position.x, playerObj.position.x) < 800) {
+          this.isActive = true;
+          console.log("jlkjasdlfjas");
+          let { dx, dy } = measureAngle(playerObj, this);
+          if (dx === -1 && dy === -1 && this.move.left) {
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
+          } else if (dx === -1 && dy === 1 && this.move.left) {
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
+          } else if (dx === 1 && dy === 1 && this.move.right) {
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
+          } else if (dx === 1 && dy === -1 && this.move.right) {
+            bullets.push(new Bullet(this.position.x + this.size.width / 2, this.position.y, 352, 0, dx, 0, "enemy"));
+          } else {
+            this.isActive = false;
+          }
+        }
+      }
+    }
+  }
+  checkFall() {
+    if (this.position.y + this.size.height >= canvas.height) {
+      return true;
+    } else if (this.move.onWater) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  updatePosition() {
+    this.movePosition();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     this.checkGroundCollision();
+    this.checkWallCollision();
     this.drawEnemy();
   }
   deleteEnemy() {

@@ -39,6 +39,7 @@ function createNewBullet(x, y, { dx, dy, sx, sy }) {
 class Player {
   constructor({ position, size }) {
     this.id = "player";
+    this.life = 4;
     this.trackPassVelocity = 0;
     this.fpsCount = 0;
     this.shiftRight = 0;
@@ -65,6 +66,15 @@ class Player {
     };
     this.drawPlayer();
   }
+
+  checkFall() {
+    if (this.position.y + this.size.height >= canvas.height) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   drawPlayer() {
     if (this.move.onWater && this.move.lastDirection === "right") {
       let { water } = playerPicture;
