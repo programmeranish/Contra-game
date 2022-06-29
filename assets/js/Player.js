@@ -33,11 +33,12 @@ let shootBulletDirection = {
 };
 
 function createNewBullet(x, y, { dx, dy, sx, sy }) {
-  return new Bullet(x, y, sx, sy, dx, dy);
+  return new Bullet(x, y, sx, sy, dx, dy, "player");
 }
 
 class Player {
   constructor({ position, size }) {
+    this.id = "player";
     this.trackPassVelocity = 0;
     this.fpsCount = 0;
     this.shiftRight = 0;

@@ -2,12 +2,13 @@ var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 
 class Bullet {
-  constructor(x, y, sx, sy, dx, dy) {
+  constructor(x, y, sx, sy, dx, dy, shotBy) {
     this.position = { x, y };
     this.bulletDirection = { dx, dy };
     this.bulletSourceImage = { sx, sy };
     this.bulletSpeed = 4;
     this.size = { height: 50, width: 50 };
+    this.shotBy = shotBy;
     this.drawBullet();
   }
   checkOutOfBox() {
