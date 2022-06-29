@@ -5,6 +5,18 @@ var enemies = [];
 var blasts = [];
 var enemyBots = [];
 
+function createBlast({ x, y }) {
+  blasts.push(
+    new Blast({
+      position: { x, y },
+      size: { height: 50, width: 50 },
+    })
+  );
+  setTimeout(() => {
+    blasts.shift();
+  }, 500);
+}
+
 class Gameplay {
   constructor() {
     this.backgroundImage = new Background();
@@ -96,33 +108,34 @@ class Gameplay {
     this.backgroundImage.drawBackground();
     //creating tracks
     this.trackObj.checkTracks();
+
     //filtering bullets out of the view
     bullets = bullets.filter((bulletObj) => {
       if (!bulletObj.checkOutOfBox()) {
         //if inside bullet check collision with enemies
-        let singleBullet = null;
+        let singleBullet = null; //bullet for return if none touches the bullet with enemy or other object
         if (enemies.length === 0) {
           singleBullet = bulletObj;
         }
 
-        enemyBots.forEach((enemyBot) => {
+        enemyBots = enemyBots.filter((enemyBot) => {
+          let bot = enemyBot;
           if (checkBulletCollision(bulletObj, enemyBot)) {
             enemyBot.shoted();
-            console.log("shooted bot");
             singleBullet = null;
+            if (enemyBot.isDead()) {
+              bot = null;
+              createBlast(enemyBot.position);
+            }
           }
+
+          return bot;
         });
+
         enemies = enemies.filter((enemy) => {
+          //checking if the bullet hits the enemy with loop again at enemies
           if (checkBulletCollision(bulletObj, enemy)) {
-            blasts.push(
-              new Blast({
-                position: { x: enemy.position.x, y: enemy.position.y },
-                size: { height: 50, width: 50 },
-              })
-            );
-            setTimeout(() => {
-              blasts.shift();
-            }, 500);
+            createBlast(enemy.position);
             return null;
           } else {
             singleBullet = bulletObj;
@@ -130,10 +143,9 @@ class Gameplay {
           }
         });
         return singleBullet;
-      } else {
-        bulletObj.deleteBullet();
       }
     });
+
     bullets.forEach((bullet) => {
       bullet.updatePosition();
       bullet.drawBullet();
@@ -142,7 +154,7 @@ class Gameplay {
     this.player.updatePosition(this.trackObj);
     enemies.forEach((enemy) => {
       if (checkEnemyCollision(this.player, enemy)) {
-        console.log("collided");
+        //player dies
       }
       checkOnTrack(enemy, this.trackObj);
       enemy.updatePosition(this.trackObj);
@@ -151,6 +163,7 @@ class Gameplay {
     //drawing bot
     enemyBots.forEach((enemyBot) => {
       enemyBot.drawBot();
+      enemyBot.shootPlayer(this.player);
     });
 
     //drawing black

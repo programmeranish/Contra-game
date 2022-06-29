@@ -144,7 +144,6 @@ class Track {
           };
           //for enemy bot position update
           if (this.track[y][x] === 6) {
-            console.log("track moving", x, y);
             enemyBots.forEach((enemyBot) => {
               if (enemyBot.arrayPosition.y === y) {
                 enemyBot.updatePosition({ position: trackPosition });

@@ -109,3 +109,24 @@ function checkBulletCollision(bullet, target) {
     return true;
   }
 }
+
+function measureDistance(p1, p2) {
+  return Math.abs(p2 - p1);
+}
+function measureAngle(player, enemy) {
+  let directionX = player.position.x - enemy.position.x;
+  let directionY = enemy.position.y - player.position.y;
+  let dx;
+  let dy;
+  if (directionX > 0) {
+    dx = 1;
+  } else {
+    dx = -1;
+  }
+  if (directionY > 0) {
+    dy = -1;
+  } else {
+    dy = 1;
+  }
+  return { dx, dy };
+}
