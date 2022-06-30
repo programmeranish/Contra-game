@@ -9,6 +9,18 @@ canvas.height = window.innerHeight;
 let playerSprite = document.createElement("img");
 playerSprite.src = "/assets/images/player.png";
 
+function createBlast({ x, y }) {
+  blasts.push(
+    new Blast({
+      position: { x, y },
+      size: { height: 60, width: 60 },
+    })
+  );
+  setTimeout(() => {
+    blasts.shift();
+  }, 500);
+}
+
 function createEnemyBot(trackObj) {
   for (let y = 0; y < trackObj.track.length; y++) {
     for (let x = 0; x < trackObj.track[y].length; x++) {
@@ -33,6 +45,15 @@ function checkOnTrack(player, trackObj) {
         y: y * GRID_HEIGHT,
       };
       if (trackObj.track[y][x] === 1) {
+        //calculating the position of the road
+
+        //checking if the player is above the road with player x,y, and road x,y
+        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT) {
+          onTrack = true;
+          player.move.onWater = false;
+          player.baseLevel = trackPosition.y;
+        }
+      } else if (trackObj.track[y][x] === 3 || trackObj.track[y][x] === 4 || trackObj.track[y][x] === 5) {
         //calculating the position of the road
 
         //checking if the player is above the road with player x,y, and road x,y
@@ -87,8 +108,14 @@ function checkBulletCollision(bullet, target) {
 
     let x2 = target.position.x;
     let y2 = target.position.y;
-    let w2 = target.size.width;
     let h2 = target.size.height;
+    if (target.move.down) {
+      y2 = target.position.y + target.size.height / 1.5;
+      h2 = target.size.height / 3;
+    } else if (target.isJumping) {
+      h2 = this.size.height / 2;
+    }
+    let w2 = target.size.width;
 
     if (x2 > w1 + x1 || x1 > w2 + x2 || y2 > h1 + y1 || y1 > h2 + y2) {
       return false;
@@ -117,4 +144,24 @@ function measureAngle(player, enemy) {
     dy = 1;
   }
   return { dx, dy };
+}
+
+function checkBridges(trackObj, target) {
+  for (let y = 0; y < trackObj.track.length; y++) {
+    for (let x = 0; x < trackObj.track[y].length; x++) {
+      let trackPosition = {
+        x: x * GRID_WIDTH - trackObj.shiftTrack,
+        y: y * GRID_HEIGHT,
+      };
+      if (trackObj.track[y][x] === 3 || trackObj.track[y][x] === 4 || trackObj.track[y][x] === 5)
+        if (target.id === "player") {
+          if (target.position.x >= trackPosition.x) {
+            setTimeout(() => {
+              trackObj.track[y][x] = 0;
+              createBlast(trackPosition);
+            }, 5000);
+          }
+        }
+    }
+  }
 }

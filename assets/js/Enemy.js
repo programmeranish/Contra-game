@@ -8,7 +8,7 @@ let enemyPicture = {
 class Enemy {
   constructor({ enemyType }) {
     this.id = "enemy";
-    this.position = { x: 220, y: 0 };
+    this.position = { x: 1000, y: 0 };
     this.size = { height: 80, width: 50 };
     this.velocity = { x: 0, y: 10 };
     this.baseLevel = canvas.height;

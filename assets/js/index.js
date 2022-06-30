@@ -193,6 +193,9 @@ class Gameplay {
       playerDead(this.player);
     }
 
+    //blasting bridges over player
+    checkBridges(this.trackObj, this.player);
+
     //drawing bot
     enemyBots.forEach((enemyBot) => {
       enemyBot.drawBot();

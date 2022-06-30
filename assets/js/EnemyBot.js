@@ -10,6 +10,7 @@ class EnemyBot {
     this.arrayPosition = { x: arrayPosition.x, y: arrayPosition.y };
     this.isActive = false;
     this.fps = 0;
+    this.move = { down: false };
   }
 
   drawBot() {
