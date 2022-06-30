@@ -40,6 +40,7 @@ class Player {
   constructor({ position, size }) {
     this.id = "player";
     this.life = 4;
+    this.score = 0;
     this.trackPassVelocity = 0;
     this.fpsCount = 0;
     this.shiftRight = 0;

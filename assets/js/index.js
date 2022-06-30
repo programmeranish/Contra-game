@@ -29,6 +29,7 @@ function playerDead(player) {
 
 class Gameplay {
   constructor() {
+    console.log(enemyBots);
     this.backgroundImage = new Background();
     this.player = new Player({
       position: { x: 0, y: 0 },
@@ -126,6 +127,7 @@ class Gameplay {
           let bot = enemyBot;
           if (checkBulletCollision(bulletObj, enemyBot)) {
             enemyBot.shoted();
+            this.player.score++;
             singleBullet = null;
             if (enemyBot.isDead()) {
               bot = null;

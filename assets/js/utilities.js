@@ -1,4 +1,5 @@
 var loadedImages = {};
+let onceFlag = true;
 
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
@@ -30,6 +31,7 @@ function createEnemyBot(trackObj) {
       };
 
       if (trackObj.track[y][x] === 6) {
+        console.log("creating enemy bots");
         enemyBots.push(new EnemyBot({ position: trackPosition, arrayPosition: { x, y } }));
       }
     }
@@ -156,10 +158,10 @@ function checkBridges(trackObj, target) {
       if (trackObj.track[y][x] === 3 || trackObj.track[y][x] === 4 || trackObj.track[y][x] === 5)
         if (target.id === "player") {
           if (target.position.x >= trackPosition.x) {
-            setTimeout(() => {
-              trackObj.track[y][x] = 0;
-              createBlast(trackPosition);
-            }, 5000);
+            onceFlag = true;
+
+            trackObj.track[y][x] = 0;
+            createBlast(trackPosition);
           }
         }
     }
