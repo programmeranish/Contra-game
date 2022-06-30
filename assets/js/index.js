@@ -26,24 +26,30 @@ function playerDead(player) {
     player.position.x = 0;
     player.position.y = 0;
   } else {
-    player.position.x = -300;
-    player.position.y = -400;
+    player.position.x = canvas.height * 2;
+    player.position.y = canvas.width * 2;
     console.log("gameover");
   }
 }
 
 class Gameplay {
-  constructor() {
+  constructor({ playerNumber }) {
     this.backgroundImage = new Background();
     this.players = [];
 
-    this.players.push(
-      new Player({
-        position: { x: 0, y: 0 },
-        size: { width: 50, height: 80 },
-        mainPlayer: true,
-      })
-    );
+    for (let i = 0; i < playerNumber; i++) {
+      let mainPlayer = false;
+      if (i === 0) {
+        mainPlayer = true;
+      }
+      this.players.push(
+        new Player({
+          position: { x: 0, y: 0 },
+          size: { width: 50, height: 80 },
+          mainPlayer,
+        })
+      );
+    }
     // this.players.push(
     //   new Player({
     //     position: { x: 0, y: 0 },
@@ -318,8 +324,8 @@ class Gameplay {
 /*
 @game:starting new game and loop
 */
-function startGame() {
-  let game = new Gameplay();
+function startGame(playerNumber) {
+  let game = new Gameplay({ playerNumber });
   function play() {
     requestAnimationFrame(play);
     game.playgame();
@@ -329,5 +335,24 @@ function startGame() {
 
 loadImages().then((imagesObj) => {
   loadedImages = imagesObj;
-  startGame();
 });
+
+function mainMenu() {
+  canvas.style.display = "none";
+  let mainMenu = document.getElementById("main_menu");
+  let singlePlayerBtn = document.getElementById("single_player_btn");
+  let doublePlayerBtn = document.getElementById("double_player_btn");
+  singlePlayerBtn.addEventListener("click", () => {
+    mainMenu.style.display = "none";
+    canvas.style.display = "block";
+    startGame(1);
+  });
+  doublePlayerBtn.addEventListener("click", () => {
+    console.log("running");
+    mainMenu.style.display = "none";
+    canvas.style.display = "block";
+    startGame(2);
+  });
+}
+
+mainMenu();
