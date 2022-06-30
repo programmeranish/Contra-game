@@ -88,30 +88,10 @@ class Player {
   drawPlayer() {
     if (this.move.onWater && this.move.lastDirection === "right") {
       let { water } = playerPicture;
-      ctx.drawImage(
-        loadedImages["player"],
-        water.sx,
-        water.sy,
-        water.sw,
-        water.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], water.sx, water.sy, water.sw, water.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     } else if (this.move.onWater && this.move.lastDirection === "left") {
       let { reverseWater } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        reverseWater.sx,
-        reverseWater.sy,
-        reverseWater.sw,
-        reverseWater.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], reverseWater.sx, reverseWater.sy, reverseWater.sw, reverseWater.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     } else if (this.move.down && this.move.right) {
       let { downRight } = playerPicture;
       if (this.fpsCount % 10 === 0) {
@@ -121,31 +101,11 @@ class Player {
         }
       }
 
-      ctx.drawImage(
-        loadedImages["player"],
-        downRight.sx + this.shiftRight,
-        downRight.sy,
-        downRight.sw,
-        downRight.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], downRight.sx + this.shiftRight, downRight.sy, downRight.sw, downRight.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else if (this.move.down && this.move.left) {
       let { downLeft } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        downLeft.sx - this.shiftLeft,
-        downLeft.sy,
-        downLeft.sw,
-        downLeft.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], downLeft.sx - this.shiftLeft, downLeft.sy, downLeft.sw, downLeft.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       if (this.fpsCount % 10 === 0) {
         this.shiftLeft += downLeft.sw;
         if (this.shiftLeft >= downLeft.sw * downLeft.cols) {
@@ -155,17 +115,7 @@ class Player {
       this.fpsCount++;
     } else if (this.move.up && this.move.left) {
       let { upLeft } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        upLeft.sx - this.shiftLeft,
-        upLeft.sy,
-        upLeft.sw,
-        upLeft.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], upLeft.sx - this.shiftLeft, upLeft.sy, upLeft.sw, upLeft.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       if (this.fpsCount % 10 === 0) {
         this.shiftLeft += upLeft.sw;
         if (this.shiftLeft >= upLeft.sw * upLeft.cols) {
@@ -181,17 +131,7 @@ class Player {
           this.shiftRight = 0;
         }
       }
-      ctx.drawImage(
-        loadedImages["player"],
-        upRight.sx + this.shiftRight,
-        upRight.sy,
-        upRight.sw,
-        upRight.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], upRight.sx + this.shiftRight, upRight.sy, upRight.sw, upRight.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else if (this.move.right && this.move.shoot) {
       let { runningShoot } = playerPicture;
@@ -201,37 +141,14 @@ class Player {
           this.shootShiftRight = 0;
         }
       }
-      ctx.drawImage(
-        loadedImages["player"],
-        runningShoot.sx + this.shootShiftRight,
-        runningShoot.sy,
-        runningShoot.sw,
-        runningShoot.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], runningShoot.sx + this.shootShiftRight, runningShoot.sy, runningShoot.sw, runningShoot.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else if (this.move.left && this.move.shoot) {
       let { runningReverseShoot } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        runningReverseShoot.sx - this.shootShiftLeft,
-        runningReverseShoot.sy,
-        runningReverseShoot.sw,
-        runningReverseShoot.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], runningReverseShoot.sx - this.shootShiftLeft, runningReverseShoot.sy, runningReverseShoot.sw, runningReverseShoot.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       if (this.fpsCount % 10 === 0) {
         this.shootShiftLeft += runningReverseShoot.sw;
-        if (
-          this.shootShiftLeft >=
-          runningReverseShoot.sw * runningReverseShoot.cols
-        ) {
+        if (this.shootShiftLeft >= runningReverseShoot.sw * runningReverseShoot.cols) {
           this.shootShiftLeft = 0;
         }
       }
@@ -244,57 +161,17 @@ class Player {
           this.shiftRight = 0;
         }
       }
-      ctx.drawImage(
-        loadedImages["player"],
-        jump.sx + this.shiftRight,
-        jump.sy,
-        jump.sw,
-        jump.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], jump.sx + this.shiftRight, jump.sy, jump.sw, jump.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else if (this.move.up) {
       let { lookUp } = playerPicture;
-      ctx.drawImage(
-        loadedImages["player"],
-        lookUp.sx,
-        lookUp.sy,
-        lookUp.sw,
-        lookUp.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], lookUp.sx, lookUp.sy, lookUp.sw, lookUp.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     } else if (this.move.down && this.move.lastDirection === "right") {
       let { sleepDownRight } = playerPicture;
-      ctx.drawImage(
-        loadedImages["player"],
-        sleepDownRight.sx,
-        sleepDownRight.sy,
-        sleepDownRight.sw,
-        sleepDownRight.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], sleepDownRight.sx, sleepDownRight.sy, sleepDownRight.sw, sleepDownRight.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     } else if (this.move.down && this.move.lastDirection === "left") {
       let { sleepDownLeft } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        sleepDownLeft.sx,
-        sleepDownLeft.sy,
-        sleepDownLeft.sw,
-        sleepDownLeft.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], sleepDownLeft.sx, sleepDownLeft.sy, sleepDownLeft.sw, sleepDownLeft.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     } else if (this.move.right) {
       let { running } = playerPicture;
       if (this.fpsCount % 10 === 0) {
@@ -303,31 +180,11 @@ class Player {
           this.shiftRight = 0;
         }
       }
-      ctx.drawImage(
-        loadedImages["player"],
-        running.sx + this.shiftRight,
-        running.sy,
-        running.sw,
-        running.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], running.sx + this.shiftRight, running.sy, running.sw, running.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else if (this.move.left) {
       let { runningReverse } = playerPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        runningReverse.sx - this.shiftLeft,
-        runningReverse.sy,
-        runningReverse.sw,
-        runningReverse.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], runningReverse.sx - this.shiftLeft, runningReverse.sy, runningReverse.sw, runningReverse.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       if (this.fpsCount % 10 === 0) {
         this.shiftLeft += runningReverse.sw;
         if (this.shiftLeft >= runningReverse.sw * runningReverse.cols) {
@@ -336,29 +193,9 @@ class Player {
       }
       this.fpsCount++;
     } else if (this.move.lastDirection === "left") {
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        397,
-        6,
-        19,
-        36,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], 397, 6, 19, 36, this.position.x, this.position.y, this.size.width, this.size.height);
     } else {
-      ctx.drawImage(
-        loadedImages["player"],
-        0,
-        6,
-        19,
-        36,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], 0, 6, 19, 36, this.position.x, this.position.y, this.size.width, this.size.height);
     }
   }
 
@@ -403,93 +240,27 @@ class Player {
     if (status) {
       this.move.shoot = true;
       if (this.move.down && this.move.right) {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y + adjustHeightBullet,
-            shootBulletDirection.rightDown
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y + adjustHeightBullet, shootBulletDirection.rightDown));
       } else if (this.move.down && this.move.left) {
-        bullets.push(
-          createNewBullet(
-            this.position.x - this.size.width,
-            this.position.y + adjustHeightBullet,
-            shootBulletDirection.leftDown
-          )
-        );
+        bullets.push(createNewBullet(this.position.x - this.size.width, this.position.y + adjustHeightBullet, shootBulletDirection.leftDown));
       } else if (this.move.up && this.move.left) {
-        bullets.push(
-          createNewBullet(
-            this.position.x - this.size.width,
-            this.position.y - adjustHeightBullet,
-            shootBulletDirection.leftUp
-          )
-        );
+        bullets.push(createNewBullet(this.position.x - this.size.width, this.position.y - adjustHeightBullet, shootBulletDirection.leftUp));
       } else if (this.move.up && this.move.right) {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y - adjustHeightBullet,
-            shootBulletDirection.rightUp
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y - adjustHeightBullet, shootBulletDirection.rightUp));
       } else if (this.move.down && this.move.lastDirection == "left") {
-        bullets.push(
-          createNewBullet(
-            this.position.x - this.size.width,
-            this.position.y + adjustHeightBullet,
-            shootBulletDirection.downLeft
-          )
-        );
+        bullets.push(createNewBullet(this.position.x - this.size.width, this.position.y + adjustHeightBullet, shootBulletDirection.downLeft));
       } else if (this.move.lastDirection == "left") {
-        bullets.push(
-          createNewBullet(
-            this.position.x - this.size.width,
-            this.position.y,
-            shootBulletDirection.left
-          )
-        );
+        bullets.push(createNewBullet(this.position.x - this.size.width, this.position.y, shootBulletDirection.left));
       } else if (this.move.up) {
-        bullets.push(
-          createNewBullet(
-            this.position.x,
-            this.position.y,
-            shootBulletDirection.up
-          )
-        );
+        bullets.push(createNewBullet(this.position.x, this.position.y, shootBulletDirection.up));
       } else if (this.move.down) {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y + adjustHeightBullet,
-            shootBulletDirection.down
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y + adjustHeightBullet, shootBulletDirection.down));
       } else if (this.move.right) {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y,
-            shootBulletDirection.right
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y, shootBulletDirection.right));
       } else if (this.move.left) {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y,
-            shootBulletDirection.left
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y, shootBulletDirection.left));
       } else {
-        bullets.push(
-          createNewBullet(
-            this.position.x + this.size.width,
-            this.position.y,
-            shootBulletDirection.right
-          )
-        );
+        bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y, shootBulletDirection.right));
       }
     } else {
       this.move.shoot = false;

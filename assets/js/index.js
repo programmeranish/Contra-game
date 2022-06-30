@@ -3,10 +3,35 @@ var ctx = canvas.getContext("2d");
 var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
 
+var errorMessageElement = document.createElement("div");
+errorMessageElement.id = "error_message";
+errorMessageElement.style.display = "none";
+var successMessageElement = document.createElement("div");
+successMessageElement.id = "success_message";
+successMessageElement.style.display = "none";
+document.body.appendChild(errorMessageElement);
+document.body.appendChild(successMessageElement);
+
 var bullets = [];
 var enemies = [];
 var blasts = [];
 var enemyBots = [];
+
+function showMessage(type, message) {
+  if (type === "errorMessage") {
+    errorMessageElement.innerHTML = message;
+    errorMessageElement.style.display = "block";
+    setTimeout(() => {
+      errorMessageElement.style.display = "none";
+    }, 2000);
+  } else if (type === "successMessage") {
+    successMessageElement.innerHTML = message;
+    successMessageElement.style.display = "block";
+    setTimeout(() => {
+      successMessageElement.style.display = "none";
+    }, 2000);
+  }
+}
 
 function createBlast({ x, y }) {
   blasts.push(
@@ -342,16 +367,26 @@ function mainMenu() {
   let mainMenu = document.getElementById("main_menu");
   let singlePlayerBtn = document.getElementById("single_player_btn");
   let doublePlayerBtn = document.getElementById("double_player_btn");
+  let inputElement = document.getElementById("number");
+  console.log(inputElement.value, "sdfa");
+
   singlePlayerBtn.addEventListener("click", () => {
-    mainMenu.style.display = "none";
-    canvas.style.display = "block";
-    startGame(1);
+    if (inputElement.value == "") {
+      showMessage("errorMessage", "Empty number");
+    } else {
+      mainMenu.style.display = "none";
+      canvas.style.display = "block";
+      startGame(1);
+    }
   });
   doublePlayerBtn.addEventListener("click", () => {
-    console.log("running");
-    mainMenu.style.display = "none";
-    canvas.style.display = "block";
-    startGame(2);
+    if (inputElement.value == "") {
+      showMessage("errorMessage", "Empty number");
+    } else {
+      mainMenu.style.display = "none";
+      canvas.style.display = "block";
+      startGame(2);
+    }
   });
 }
 

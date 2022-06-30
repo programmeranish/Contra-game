@@ -43,7 +43,38 @@
 #main_menu .btn button:focus {
   opacity: 100%;
 }
+#main_menu input {
+  padding: 10px;
+  border-radius: 20px;
+}
 
 canvas {
   display: none;
+}
+
+#error_message {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 40px;
+  width: 300px;
+  background-color: brown;
+  color: white;
+  padding: 10px;
+  transition: all ease-in-out 1s;
+  border-radius: 10px;
+  z-index: 100;
+}
+#success_message {
+  position: absolute;
+  z-index: 100;
+  top: 0px;
+  right: 0px;
+  height: 40px;
+  width: 300px;
+  background-color: green;
+  color: white;
+  padding: 10px;
+  transition: all ease-in-out 1s;
+  border-radius: 10px;
 }
