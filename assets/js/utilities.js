@@ -31,7 +31,6 @@ function createEnemyBot(trackObj) {
       };
 
       if (trackObj.track[y][x] === 6) {
-        console.log("creating enemy bots");
         enemyBots.push(
           new EnemyBot({ position: trackPosition, arrayPosition: { x, y } })
         );

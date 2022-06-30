@@ -1,5 +1,8 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
+var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+
 var bullets = [];
 var enemies = [];
 var blasts = [];
@@ -23,6 +26,8 @@ function playerDead(player) {
     player.position.x = 0;
     player.position.y = 0;
   } else {
+    player.position.x = -300;
+    player.position.y = -400;
     console.log("gameover");
   }
 }
@@ -36,18 +41,14 @@ class Gameplay {
       new Player({
         position: { x: 0, y: 0 },
         size: { width: 50, height: 80 },
-      })
-    );
-    this.players.push(
-      new Player({
-        position: { x: 0, y: 0 },
-        size: { width: 50, height: 80 },
+        mainPlayer: true,
       })
     );
     // this.players.push(
     //   new Player({
     //     position: { x: 0, y: 0 },
     //     size: { width: 50, height: 80 },
+    //     mainPlayer: false,
     //   })
     // );
 
@@ -117,7 +118,6 @@ class Gameplay {
     });
     if (this.players.length === 2) {
       window.addEventListener("keydown", (event) => {
-        console.log(event.key);
         switch (event.key) {
           case "ArrowUp": {
             this.players[1].move.up = true;
@@ -220,6 +220,9 @@ class Gameplay {
           //checking if the bullet hits the enemy with loop again at enemies
           if (checkBulletCollision(bulletObj, enemy)) {
             createBlast(enemy.position);
+            this.players.forEach((player) => {
+              player.score++;
+            });
             return null;
           } else {
             singleBullet = bulletObj;
@@ -295,6 +298,21 @@ class Gameplay {
     blasts.forEach((blast) => {
       blast.drawBlast();
     });
+    ctx.font = "18px Arial";
+    gradient.addColorStop("0", "red");
+    ctx.fillStyle = gradient;
+    ctx.fillText("Score", 85, 70);
+    ctx.fillText(this.players[0].score, 100, 100);
+    ctx.fillText("Life", 145, 70);
+    ctx.fillText(this.players[0].life, 150, 100);
+    if (this.players[1]) {
+      gradient2.addColorStop("0", "blue");
+      ctx.fillStyle = gradient2;
+      ctx.fillText("Score", 185, 70);
+      ctx.fillText(this.players[1].score, 200, 100);
+      ctx.fillText("Life", 245, 70);
+      ctx.fillText(this.players[1].life, 250, 100);
+    }
   }
 }
 /*

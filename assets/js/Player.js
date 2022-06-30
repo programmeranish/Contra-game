@@ -45,10 +45,11 @@ function createNewBullet(x, y, { dx, dy, sx, sy }) {
 }
 
 class Player {
-  constructor({ position, size }) {
+  constructor({ position, size, mainPlayer }) {
     this.id = "player";
     this.life = 4;
     this.score = 0;
+    this.mainPlayer = mainPlayer;
     this.trackPassVelocity = 0;
     this.fpsCount = 0;
     this.shiftRight = 0;
@@ -508,7 +509,7 @@ class Player {
   updatePositionTrack(trackObj) {}
 
   updatePosition(trackObj) {
-    if (this.move.right) {
+    if (this.move.right && this.mainPlayer) {
       //checking if the track is not end so that it can move forward
       if ((trackObj.track[0].length - 1) * GRID_WIDTH >= canvas.width) {
         //if track is there width of screen /3 and the track moves forward

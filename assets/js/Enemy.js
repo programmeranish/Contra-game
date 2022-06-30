@@ -108,10 +108,8 @@ class Enemy {
   shootPlayer(playerObj) {
     if (this.enemyType === "runningShoot") {
       if (this.fpsCount % 100 === 0) {
-        console.log(this.enemyType);
         if (measureDistance(this.position.x, playerObj.position.x) < 800) {
           this.isActive = true;
-          console.log("jlkjasdlfjas");
           let { dx, dy } = measureAngle(playerObj, this);
           if (dx === -1 && dy === -1 && this.move.left) {
             bullets.push(
