@@ -1,0 +1,35 @@
+.game-container{
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    background-image: url("/assets/images/background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.game-container img{
+    height: 70%;
+    width:70%;
+    opacity:85%;
+    margin: auto;
+}
+.game-container .btn{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom:100px;
+    left:50%;
+}
+.game-container .btn button{
+    padding:10px 40px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+    transition: all 400ms ease-in-out;
+font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

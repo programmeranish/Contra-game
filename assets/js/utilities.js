@@ -32,7 +32,9 @@ function createEnemyBot(trackObj) {
 
       if (trackObj.track[y][x] === 6) {
         console.log("creating enemy bots");
-        enemyBots.push(new EnemyBot({ position: trackPosition, arrayPosition: { x, y } }));
+        enemyBots.push(
+          new EnemyBot({ position: trackPosition, arrayPosition: { x, y } })
+        );
       }
     }
   }
@@ -50,28 +52,50 @@ function checkOnTrack(player, trackObj) {
         //calculating the position of the road
 
         //checking if the player is above the road with player x,y, and road x,y
-        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT) {
+        if (
+          player.position.x + player.size.width >= trackPosition.x &&
+          player.position.x <= trackPosition.x + GRID_WIDTH &&
+          player.position.y + player.size.height <= trackPosition.y &&
+          player.position.y + player.size.height >=
+            trackPosition.y - GRID_HEIGHT
+        ) {
           onTrack = true;
           player.move.onWater = false;
           player.baseLevel = trackPosition.y;
         }
-      } else if (trackObj.track[y][x] === 3 || trackObj.track[y][x] === 4 || trackObj.track[y][x] === 5) {
+      } else if (
+        trackObj.track[y][x] === 3 ||
+        trackObj.track[y][x] === 4 ||
+        trackObj.track[y][x] === 5
+      ) {
         //calculating the position of the road
 
         //checking if the player is above the road with player x,y, and road x,y
-        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT) {
+        if (
+          player.position.x + player.size.width >= trackPosition.x &&
+          player.position.x <= trackPosition.x + GRID_WIDTH &&
+          player.position.y + player.size.height <= trackPosition.y &&
+          player.position.y + player.size.height >=
+            trackPosition.y - GRID_HEIGHT
+        ) {
           onTrack = true;
           player.move.onWater = false;
           player.baseLevel = trackPosition.y;
         }
       } else if (trackObj.track[y][x] === 8) {
-        //calculating the position of the road
+        //calculating the position of the water
         let trackPosition = {
           x: x * GRID_WIDTH - trackObj.shiftTrack,
           y: y * GRID_HEIGHT,
         };
         //checking if the player is above the road with player x,y, and road x,y
-        if (player.position.x + player.size.width >= trackPosition.x && player.position.x <= trackPosition.x + GRID_WIDTH && player.position.y + player.size.height <= trackPosition.y && player.position.y + player.size.height >= trackPosition.y - GRID_HEIGHT / 2) {
+        if (
+          player.position.x + player.size.width >= trackPosition.x &&
+          player.position.x <= trackPosition.x + GRID_WIDTH &&
+          player.position.y + player.size.height <= trackPosition.y &&
+          player.position.y + player.size.height >=
+            trackPosition.y - GRID_HEIGHT / 2
+        ) {
           onTrack = true;
           player.move.onWater = true;
           player.baseLevel = trackPosition.y;
@@ -155,7 +179,11 @@ function checkBridges(trackObj, target) {
         x: x * GRID_WIDTH - trackObj.shiftTrack,
         y: y * GRID_HEIGHT,
       };
-      if (trackObj.track[y][x] === 3 || trackObj.track[y][x] === 4 || trackObj.track[y][x] === 5)
+      if (
+        trackObj.track[y][x] === 3 ||
+        trackObj.track[y][x] === 4 ||
+        trackObj.track[y][x] === 5
+      )
         if (target.id === "player") {
           if (target.position.x >= trackPosition.x) {
             onceFlag = true;

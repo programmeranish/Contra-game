@@ -29,12 +29,27 @@ function playerDead(player) {
 
 class Gameplay {
   constructor() {
-    console.log(enemyBots);
     this.backgroundImage = new Background();
-    this.player = new Player({
-      position: { x: 0, y: 0 },
-      size: { width: 50, height: 80 },
-    });
+    this.players = [];
+
+    this.players.push(
+      new Player({
+        position: { x: 0, y: 0 },
+        size: { width: 50, height: 80 },
+      })
+    );
+    this.players.push(
+      new Player({
+        position: { x: 0, y: 0 },
+        size: { width: 50, height: 80 },
+      })
+    );
+    // this.players.push(
+    //   new Player({
+    //     position: { x: 0, y: 0 },
+    //     size: { width: 50, height: 80 },
+    //   })
+    // );
 
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
 
@@ -45,28 +60,28 @@ class Gameplay {
     window.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "w": {
-          this.player.move.up = true;
+          this.players[0].move.up = true;
           break;
         }
         case "s": {
-          this.player.move.down = true;
+          this.players[0].move.down = true;
           break;
         }
         case "a": {
-          this.player.moveLeft(true);
-          this.player.movePosition();
+          this.players[0].moveLeft(true);
+          this.players[0].movePosition();
           break;
         }
         case "d": {
-          this.player.moveRight(true);
+          this.players[0].moveRight(true);
           break;
         }
         case "k": {
-          this.player.jump(true);
+          this.players[0].jump(true);
           break;
         }
         case "j": {
-          this.player.shoot(true);
+          this.players[0].shoot(true);
           break;
         }
       }
@@ -76,30 +91,91 @@ class Gameplay {
     window.addEventListener("keyup", (event) => {
       switch (event.key) {
         case "w": {
-          this.player.move.up = false;
+          this.players[0].move.up = false;
           break;
         }
         case "s": {
-          this.player.move.down = false;
+          this.players[0].move.down = false;
           break;
         }
         case "a": {
-          this.player.moveLeft(false);
+          this.players[0].moveLeft(false);
           break;
         }
         case "d": {
-          this.player.moveRight(false);
+          this.players[0].moveRight(false);
           break;
         }
         case "k": {
           break;
         }
         case "j": {
-          this.player.shoot(false);
+          this.players[0].shoot(false);
           break;
         }
       }
     });
+    if (this.players.length === 2) {
+      window.addEventListener("keydown", (event) => {
+        console.log(event.key);
+        switch (event.key) {
+          case "ArrowUp": {
+            this.players[1].move.up = true;
+            break;
+          }
+          case "ArrowDown": {
+            this.players[1].move.down = true;
+            break;
+          }
+          case "ArrowLeft": {
+            this.players[1].moveLeft(true);
+            this.players[1].movePosition();
+            break;
+          }
+          case "ArrowRight": {
+            this.players[1].moveRight(true);
+            break;
+          }
+          case "]": {
+            this.players[1].jump(true);
+            break;
+          }
+          case "[": {
+            this.players[1].shoot(true);
+            break;
+          }
+        }
+      });
+
+      // key up event
+      window.addEventListener("keyup", (event) => {
+        switch (event.key) {
+          case "ArrowUp": {
+            this.players[1].move.up = false;
+            break;
+          }
+          case "ArrowDown": {
+            this.players[1].move.down = false;
+            break;
+          }
+          case "ArrowLeft": {
+            this.players[1].moveLeft(false);
+            break;
+          }
+          case "ArrowRight": {
+            this.players[1].moveRight(false);
+            break;
+          }
+          case "]": {
+            break;
+          }
+          case "[": {
+            this.players[1].shoot(false);
+            break;
+          }
+        }
+      });
+    }
   }
 
   /*continuouse loop running for the game
@@ -122,19 +198,21 @@ class Gameplay {
           singleBullet = bulletObj;
         }
 
-        //checking bullet and enemy bots collision
-        enemyBots = enemyBots.filter((enemyBot) => {
-          let bot = enemyBot;
-          if (checkBulletCollision(bulletObj, enemyBot)) {
-            enemyBot.shoted();
-            this.player.score++;
-            singleBullet = null;
-            if (enemyBot.isDead()) {
-              bot = null;
-              createBlast(enemyBot.position);
+        this.players.forEach((player) => {
+          //checking bullet and enemy bots collision
+          enemyBots = enemyBots.filter((enemyBot) => {
+            let bot = enemyBot;
+            if (checkBulletCollision(bulletObj, enemyBot)) {
+              enemyBot.shoted();
+              player.score++;
+              singleBullet = null;
+              if (enemyBot.isDead()) {
+                bot = null;
+                createBlast(enemyBot.position);
+              }
             }
-          }
-          return bot;
+            return bot;
+          });
         });
 
         //check enemies and bullet collision
@@ -148,10 +226,12 @@ class Gameplay {
             return enemy;
           }
         });
-        if (checkBulletCollision(bulletObj, this.player)) {
-          singleBullet = null;
-          playerDead(this.player);
-        }
+        this.players.forEach((player) => {
+          if (checkBulletCollision(bulletObj, player)) {
+            singleBullet = null;
+            playerDead(player);
+          }
+        });
         return singleBullet;
       }
     });
@@ -162,9 +242,11 @@ class Gameplay {
       bullet.drawBullet();
     });
 
-    //checking player on track
-    checkOnTrack(this.player, this.trackObj);
-    this.player.updatePosition(this.trackObj);
+    this.players.forEach((player) => {
+      //checking player on track
+      checkOnTrack(player, this.trackObj);
+      player.updatePosition(this.trackObj);
+    });
 
     //filtering enemies on fall
     enemies = enemies.filter((enemy) => {
@@ -176,32 +258,37 @@ class Gameplay {
       }
     });
 
-    //checking player with enemy collision
-    enemies.forEach((enemy) => {
-      //automatic shooting by enemy
-      enemy.shootPlayer(this.player);
+    this.players.forEach((player) => {
+      //checking player with enemy collision
+      enemies.forEach((enemy) => {
+        //automatic shooting by enemy
+        enemy.shootPlayer(player);
 
-      //player and enemy collision check
-      if (checkEnemyCollision(this.player, enemy)) {
-        playerDead(this.player);
+        //player and enemy collision check
+        if (checkEnemyCollision(player, enemy)) {
+          playerDead(player);
+        }
+      });
+
+      //checking if the player has fallen
+      if (player.checkFall()) {
+        playerDead(player);
       }
+
+      //blasting bridges over player
+      checkBridges(this.trackObj, player);
+    });
+    enemies.forEach((enemy) => {
       //checking enemy on track for base
       checkOnTrack(enemy, this.trackObj);
       enemy.updatePosition(this.trackObj);
     });
-
-    //checking if the player has fallen
-    if (this.player.checkFall()) {
-      playerDead(this.player);
-    }
-
-    //blasting bridges over player
-    checkBridges(this.trackObj, this.player);
-
     //drawing bot
     enemyBots.forEach((enemyBot) => {
       enemyBot.drawBot();
-      enemyBot.shootPlayer(this.player);
+      this.players.forEach((player) => {
+        enemyBot.shootPlayer(player);
+      });
     });
 
     //drawing black
