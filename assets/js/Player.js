@@ -1,5 +1,3 @@
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
 //for movement of track forward
 let adjustHeightBullet = 20; //for adjusting bullet height for accurate bullet while shooting
 
@@ -39,7 +37,13 @@ let shootBulletDirection = {
   leftUp: { dx: -1, dy: -1, sx: 352, sy: 10 },
   leftDown: { dx: -1, dy: 1, sx: 352, sy: -7 },
 };
-
+/**
+ *
+ * @param {number} x -position
+ * @param {number} y -position
+ * @param {object} param2 -object of direction and speeds
+ * @returns
+ */
 function createNewBullet(x, y, { dx, dy, sx, sy }) {
   return new Bullet(x, y, sx, sy, dx, dy, "player");
 }
@@ -215,6 +219,7 @@ class Player {
       this.velocity.y += GRAVITY;
     }
   }
+
   moveLeft(status) {
     if (status) {
       this.move.left = true;
@@ -284,8 +289,6 @@ class Player {
       this.velocity.x = 0;
     }
   }
-
-  updatePositionTrack(trackObj) {}
 
   updatePosition(trackObj) {
     if (this.move.right && this.mainPlayer) {

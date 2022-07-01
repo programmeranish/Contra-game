@@ -1,6 +1,3 @@
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
-
 class Bullet {
   constructor(x, y, sx, sy, dx, dy, shotBy) {
     this.position = { x, y };

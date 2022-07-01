@@ -3,7 +3,7 @@ const JUMP_VALUE = 10;
 const PLAYER_SPEED = 3;
 const ENEMY_SPEED = 3;
 
-//grid
+//grid for track
 const GRID_WIDTH = 60;
 const GRID_HEIGHT = 60;
 

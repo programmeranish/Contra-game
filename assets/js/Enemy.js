@@ -1,5 +1,3 @@
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
 let enemyPicture = {
   running: { sx: 228, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },
   runningReverse: { sx: 190, sy: 43, sh: 36, sw: 19, dh: 80, dw: 50, cols: 5 },

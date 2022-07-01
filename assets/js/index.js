@@ -1,5 +1,3 @@
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
 var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var inputElement = document.getElementById("number");
@@ -15,6 +13,12 @@ document.body.appendChild(errorMessageElement);
 document.body.appendChild(successMessageElement);
 var gameWinElement = document.getElementById("game_win");
 var gameOverElement = document.getElementById("game_over");
+
+/**
+ *
+ * @param {number} id -id for number
+ * @returns {object} | null
+ */
 async function getData(id) {
   const response = await fetch("https://contrabackend.herokuapp.com/");
   const data = await response.json();
@@ -142,7 +146,9 @@ class Gameplay {
       trackArray = JSON.parse(gameResource.track);
     }
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
-    var enemyInterval = setInterval(() => {}, 5000);
+    var enemyInterval = setInterval(() => {
+      enemies.push(new Enemy({ enemyType: "runningShoot" }));
+    }, 6500);
 
     this.trackObj = new Track();
 
@@ -268,11 +274,9 @@ class Gameplay {
     }
   }
 
-  /*continuouse loop running for the game
-  @playgame()=> the game is playing
-
-  //continuous looop of the game on request animation frame
-  */
+  /**
+   * main continous loop
+   */
   playgame() {
     this.backgroundImage.clearScreen();
     this.backgroundImage.drawBackground();
@@ -420,9 +424,12 @@ class Gameplay {
     delete this;
   }
 }
-/*
-@game:starting new game and loop
-*/
+
+/**
+ *
+ * @param {number} playerNumber -number of player
+ * @param {object | null} gameResource
+ */
 function startGame(playerNumber, gameResource = null) {
   let game = new Gameplay({ playerNumber, gameResource });
   function play() {
@@ -436,6 +443,7 @@ loadImages().then((imagesObj) => {
   loadedImages = imagesObj;
 });
 
+//main menu
 function mainMenu() {
   canvas.style.display = "none";
   let singlePlayerBtn = document.getElementById("single_player_btn");

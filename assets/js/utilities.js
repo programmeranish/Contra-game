@@ -1,6 +1,9 @@
 var loadedImages = {};
 let onceFlag = true;
 
+/**
+ * audio files
+ */
 var blastSound = new Audio("./assets/audio/blastsound.wav");
 var bulletSound = new Audio("./assets/audio/bulletsound.wav");
 var shotBotSound = new Audio("./assets/audio/shotbotsound.wav");
@@ -31,6 +34,10 @@ canvas.height = window.innerHeight;
 let playerSprite = document.createElement("img");
 playerSprite.src = "./assets/images/player.png";
 
+/**
+ * draw blast spirite
+ * @param {object} param0 - x Position y position
+ */
 function createBlast({ x, y }) {
   blasts.push(
     new Blast({
@@ -43,6 +50,10 @@ function createBlast({ x, y }) {
   }, 500);
 }
 
+/**
+ *
+ * @param {object} trackObj - track array
+ */
 function createEnemyBot(trackObj) {
   for (let y = 0; y < trackObj.track.length; y++) {
     for (let x = 0; x < trackObj.track[y].length; x++) {
@@ -57,6 +68,12 @@ function createEnemyBot(trackObj) {
     }
   }
 }
+
+/**
+ *
+ * @param {object} player -player object
+ * @param {object} trackObj -track instance
+ */
 function checkOnTrack(player, trackObj) {
   //onTrack for checking if player is above the track or not if not player base will be ground
   let onTrack = false;
@@ -102,6 +119,12 @@ function checkOnTrack(player, trackObj) {
   }
 }
 
+/**
+ * returns true if collision
+ * @param {object} player
+ * @param {object} enemy
+ * @returns
+ */
 function checkEnemyCollision(player, enemy) {
   let x1 = player.position.x;
   let y1 = player.position.y;
@@ -121,6 +144,12 @@ function checkEnemyCollision(player, enemy) {
     return true;
   }
 }
+/**
+ *
+ * @param {object} bullet
+ * @param {object} target -can be player object or enemy
+ * @returns true | false
+ */
 function checkBulletCollision(bullet, target) {
   if (bullet.shotBy != target.id) {
     let x1 = bullet.position.x;
@@ -147,9 +176,22 @@ function checkBulletCollision(bullet, target) {
   } else return false;
 }
 
+/**
+ *
+ * @param {number} p1 -number for calculating distance
+ * @param {number} p2 -number for calculating
+ * @returns
+ */
 function measureDistance(p1, p2) {
   return Math.abs(p2 - p1);
 }
+
+/**
+ *
+ * @param {object} player
+ * @param {object} enemy
+ * @returns object -object of direction of x and y
+ */
 function measureAngle(player, enemy) {
   let directionX = player.position.x - enemy.position.x;
   let directionY = enemy.position.y - player.position.y;
@@ -168,6 +210,11 @@ function measureAngle(player, enemy) {
   return { dx, dy };
 }
 
+/**
+ *
+ * @param {object} trackObj
+ * @param {object} target
+ */
 function checkBridges(trackObj, target) {
   for (let y = 0; y < trackObj.track.length; y++) {
     for (let x = 0; x < trackObj.track[y].length; x++) {
