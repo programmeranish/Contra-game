@@ -1,10 +1,10 @@
 var loadedImages = {};
 let onceFlag = true;
 
-var blastSound = new Audio("/assets/audio/blastsound.wav");
-var bulletSound = new Audio("/assets/audio/bulletsound.wav");
-var shotBotSound = new Audio("/assets/audio/shotbotsound.wav");
-var bulletesSound = new Audio("/assets/audio/bulletsSound.wav");
+var blastSound = new Audio("./assets/audio/blastsound.wav");
+var bulletSound = new Audio("./assets/audio/bulletsound.wav");
+var shotBotSound = new Audio("./assets/audio/shotbotsound.wav");
+var bulletesSound = new Audio("./assets/audio/bulletsSound.wav");
 
 var trackArray = [
   [0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0],
