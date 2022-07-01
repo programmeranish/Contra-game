@@ -7,5 +7,5 @@ const ENEMY_SPEED = 3;
 const GRID_WIDTH = 60;
 const GRID_HEIGHT = 60;
 
-const IMAGES_PATH = "/assets/images/";
+const IMAGES_PATH = "./assets/images/";
 const IMAGES_NAMES = ["player", "background", "playerreverse", "blastimage"];

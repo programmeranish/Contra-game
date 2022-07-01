@@ -29,7 +29,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let playerSprite = document.createElement("img");
-playerSprite.src = "/assets/images/player.png";
+playerSprite.src = "./assets/images/player.png";
 
 function createBlast({ x, y }) {
   blasts.push(
