@@ -61,6 +61,7 @@ function showMessage(type, message) {
 }
 
 function createBlast({ x, y }) {
+  blastSound.play();
   blasts.push(
     new Blast({
       position: { x, y },
@@ -292,6 +293,7 @@ class Gameplay {
           enemyBots = enemyBots.filter((enemyBot) => {
             let bot = enemyBot;
             if (checkBulletCollision(bulletObj, enemyBot)) {
+              shotBotSound.play();
               enemyBot.shoted();
               player.score++;
               singleBullet = null;

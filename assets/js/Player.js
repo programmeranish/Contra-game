@@ -244,6 +244,7 @@ class Player {
   }
   shoot(status) {
     if (status) {
+      bulletesSound.play();
       this.move.shoot = true;
       if (this.move.down && this.move.right) {
         bullets.push(createNewBullet(this.position.x + this.size.width, this.position.y + adjustHeightBullet, shootBulletDirection.rightDown));
