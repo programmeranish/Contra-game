@@ -77,6 +77,12 @@ class Player {
     this.drawPlayer();
   }
 
+  checkGameWin() {
+    if (this.position.x > canvas.width && this.mainPlayer) {
+      return true;
+    } else return false;
+  }
+
   checkFall() {
     if (this.position.y + this.size.height >= canvas.height) {
       return true;

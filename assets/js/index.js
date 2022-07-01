@@ -3,6 +3,7 @@ var ctx = canvas.getContext("2d");
 var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var inputElement = document.getElementById("number");
+var mainMenuElement = document.getElementById("main_menu");
 
 var errorMessageElement = document.createElement("div");
 errorMessageElement.id = "error_message";
@@ -12,9 +13,10 @@ successMessageElement.id = "success_message";
 successMessageElement.style.display = "none";
 document.body.appendChild(errorMessageElement);
 document.body.appendChild(successMessageElement);
-
+var gameWinElement = document.getElementById("game_win");
+var gameOverElement = document.getElementById("game_over");
 async function getData(id) {
-  const response = await fetch("http://127.0.0.1:8000/");
+  const response = await fetch("https://contrabackend.herokuapp.com/");
   const data = await response.json();
 
   let gameData = null;
@@ -84,7 +86,7 @@ function playerDead(player) {
 
 async function saveData({ id, life, score, track }) {
   console.log(id, life, score);
-  fetch("http://127.0.0.1:8000/addScore", {
+  fetch("https://contrabackend.herokuapp.com/addScore", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -133,10 +135,10 @@ class Gameplay {
     }
 
     if (gameResource) {
-      console.log("game resource", gameResource);
-      // this.players[0].score = gameResource.score;
-      // this.players[0].life = gameResource.life;
-      // playTrack = JSON.parse(gameResource.track);
+      console.log("game resource", JSON.parse(gameResource.track));
+      this.players[0].score = gameResource.score;
+      this.players[0].life = gameResource.life;
+      trackArray = JSON.parse(gameResource.track);
     }
 
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
@@ -349,6 +351,14 @@ class Gameplay {
     });
 
     this.players.forEach((player) => {
+      if (player.checkGameWin()) {
+        canvas.style.display = "none";
+        gameWinElement.style.display = "block";
+        setTimeout(() => {
+          gameWinElement.style.display = "none";
+          mainMenuElement.style.display = "block";
+        }, 3000);
+      }
       //checking player with enemy collision
       enemies.forEach((enemy) => {
         //automatic shooting by enemy
@@ -420,7 +430,6 @@ loadImages().then((imagesObj) => {
 
 function mainMenu() {
   canvas.style.display = "none";
-  let mainMenu = document.getElementById("main_menu");
   let singlePlayerBtn = document.getElementById("single_player_btn");
   let doublePlayerBtn = document.getElementById("double_player_btn");
   let continueBtn = document.getElementById("continue_btn");
@@ -432,7 +441,7 @@ function mainMenu() {
     } else {
       let data = await getData(inputElement.value);
       if (data) {
-        mainMenu.style.display = "none";
+        mainMenuElement.style.display = "none";
         canvas.style.display = "block";
         startGame(1, data);
       } else {
@@ -444,7 +453,7 @@ function mainMenu() {
     if (inputElement.value == "") {
       showMessage("errorMessage", "Empty number");
     } else {
-      mainMenu.style.display = "none";
+      mainMenuElement.style.display = "none";
       canvas.style.display = "block";
       startGame(1);
     }
@@ -453,7 +462,7 @@ function mainMenu() {
     if (inputElement.value == "") {
       showMessage("errorMessage", "Empty number");
     } else {
-      mainMenu.style.display = "none";
+      mainMenuElement.style.display = "none";
       canvas.style.display = "block";
       startGame(2);
     }
