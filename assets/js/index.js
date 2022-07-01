@@ -79,9 +79,9 @@ function playerDead(player) {
     player.position.x = 0;
     player.position.y = 0;
   } else {
-    player.position.x = canvas.height * 2;
-    player.position.y = canvas.width * 2;
-    console.log("gameover");
+    player.position.x = -canvas.width * 10;
+    player.position.y = 0;
+    player.dead = true;
   }
 }
 
@@ -141,8 +141,8 @@ class Gameplay {
       this.players[0].life = gameResource.life;
       trackArray = JSON.parse(gameResource.track);
     }
-
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
+    var enemyInterval = setInterval(() => {}, 5000);
 
     this.trackObj = new Track();
 
@@ -355,10 +355,13 @@ class Gameplay {
     this.players.forEach((player) => {
       if (player.checkGameWin()) {
         canvas.style.display = "none";
+        saveBtn.style.display = "none";
         gameWinElement.style.display = "block";
         setTimeout(() => {
+          this.removegame();
           gameWinElement.style.display = "none";
           mainMenuElement.style.display = "block";
+          window.clearInterval(enemyInterval);
         }, 3000);
       }
       //checking player with enemy collision
@@ -412,6 +415,9 @@ class Gameplay {
       ctx.fillText("Life", 245, 70);
       ctx.fillText(this.players[1].life, 250, 100);
     }
+  }
+  removegame() {
+    delete this;
   }
 }
 /*

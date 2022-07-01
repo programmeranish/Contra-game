@@ -8,7 +8,7 @@ let enemyPicture = {
 class Enemy {
   constructor({ enemyType }) {
     this.id = "enemy";
-    this.position = { x: 1000, y: 0 };
+    this.position = { x: 1500, y: 0 };
     this.size = { height: 80, width: 50 };
     this.velocity = { x: 0, y: 10 };
     this.baseLevel = canvas.height;
@@ -28,17 +28,7 @@ class Enemy {
   drawEnemy() {
     if (this.move.left) {
       let { runningReverse } = enemyPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        runningReverse.sx + this.shift.left,
-        runningReverse.sy,
-        runningReverse.sw,
-        runningReverse.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], runningReverse.sx + this.shift.left, runningReverse.sy, runningReverse.sw, runningReverse.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       if (this.fpsCount % 10 === 0) {
         this.shift.left -= runningReverse.sw;
         if (this.shift.left < -runningReverse.sw * runningReverse.cols) {
@@ -54,31 +44,11 @@ class Enemy {
           this.shift.right = 0;
         }
       }
-      ctx.drawImage(
-        loadedImages["player"],
-        running.sx + this.shift.right,
-        running.sy,
-        running.sw,
-        running.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["player"], running.sx + this.shift.right, running.sy, running.sw, running.sh, this.position.x, this.position.y, this.size.width, this.size.height);
       this.fpsCount++;
     } else {
       let { watch } = enemyPicture;
-      ctx.drawImage(
-        loadedImages["playerreverse"],
-        watch.sx,
-        watch.sy,
-        watch.sw,
-        watch.sh,
-        this.position.x,
-        this.position.y,
-        this.size.width,
-        this.size.height
-      );
+      ctx.drawImage(loadedImages["playerreverse"], watch.sx, watch.sy, watch.sw, watch.sh, this.position.x, this.position.y, this.size.width, this.size.height);
     }
   }
 
@@ -112,53 +82,13 @@ class Enemy {
           this.isActive = true;
           let { dx, dy } = measureAngle(playerObj, this);
           if (dx === -1 && dy === -1 && this.move.left) {
-            bullets.push(
-              new Bullet(
-                this.position.x,
-                this.position.y,
-                352,
-                0,
-                dx,
-                0,
-                "enemy"
-              )
-            );
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
           } else if (dx === -1 && dy === 1 && this.move.left) {
-            bullets.push(
-              new Bullet(
-                this.position.x,
-                this.position.y,
-                352,
-                0,
-                dx,
-                0,
-                "enemy"
-              )
-            );
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
           } else if (dx === 1 && dy === 1 && this.move.right) {
-            bullets.push(
-              new Bullet(
-                this.position.x,
-                this.position.y,
-                352,
-                0,
-                dx,
-                0,
-                "enemy"
-              )
-            );
+            bullets.push(new Bullet(this.position.x, this.position.y, 352, 0, dx, 0, "enemy"));
           } else if (dx === 1 && dy === -1 && this.move.right) {
-            bullets.push(
-              new Bullet(
-                this.position.x + this.size.width / 2,
-                this.position.y,
-                352,
-                0,
-                dx,
-                0,
-                "enemy"
-              )
-            );
+            bullets.push(new Bullet(this.position.x + this.size.width / 2, this.position.y, 352, 0, dx, 0, "enemy"));
           } else {
             this.isActive = false;
           }

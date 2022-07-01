@@ -49,6 +49,7 @@ class Player {
     this.id = "player";
     this.life = 4;
     this.score = 0;
+    this.dead = false;
     this.mainPlayer = mainPlayer;
     this.trackPassVelocity = 0;
     this.fpsCount = 0;

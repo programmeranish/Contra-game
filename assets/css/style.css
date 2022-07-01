@@ -114,3 +114,7 @@ canvas {
   padding-top: 500px;
   display: none;
 }
+
+input {
+  margin-bottom: 10px;
+}
