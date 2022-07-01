@@ -2,6 +2,7 @@ var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+var inputElement = document.getElementById("number");
 
 var errorMessageElement = document.createElement("div");
 errorMessageElement.id = "error_message";
@@ -11,6 +12,30 @@ successMessageElement.id = "success_message";
 successMessageElement.style.display = "none";
 document.body.appendChild(errorMessageElement);
 document.body.appendChild(successMessageElement);
+
+async function getData(id) {
+  const response = await fetch("http://127.0.0.1:8000/");
+  const data = await response.json();
+
+  let gameData = null;
+  data.forEach((game) => {
+    if (game?.id === id) {
+      gameData = game;
+    }
+  });
+  if (gameData) return gameData;
+  else {
+    return null;
+  }
+}
+
+//creating save button
+
+var saveBtn = document.createElement("button");
+saveBtn.innerHTML = "Save Game";
+saveBtn.id = "save_btn";
+saveBtn.style.display = "none";
+document.body.appendChild(saveBtn);
 
 var bullets = [];
 var enemies = [];
@@ -57,8 +82,39 @@ function playerDead(player) {
   }
 }
 
+async function saveData({ id, life, score, track }) {
+  console.log(id, life, score);
+  fetch("http://127.0.0.1:8000/addScore", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    mode: "cors",
+    body: JSON.stringify({
+      life: life,
+      score: score,
+      id: id,
+      track: JSON.stringify(track),
+    }),
+  })
+    .then((response) => {
+      showMessage("successMessage", "Saved");
+    })
+    .catch((err) => {
+      console.log(err);
+      showMessage("errorMessage", "Error on saving");
+    });
+}
+
 class Gameplay {
-  constructor({ playerNumber }) {
+  constructor({ playerNumber, gameResource }) {
+    //for saving game
+    saveBtn.style.display = "block";
+    saveBtn.addEventListener("click", () => {
+      console.log(this.players[0].life, this.players[0].score, playTrack, inputElement.value);
+      saveData({ life: this.players[0].life, score: this.players[0].score, track: playTrack, id: inputElement.value });
+    });
     this.backgroundImage = new Background();
     this.players = [];
 
@@ -75,13 +131,13 @@ class Gameplay {
         })
       );
     }
-    // this.players.push(
-    //   new Player({
-    //     position: { x: 0, y: 0 },
-    //     size: { width: 50, height: 80 },
-    //     mainPlayer: false,
-    //   })
-    // );
+
+    if (gameResource) {
+      console.log("game resource", gameResource);
+      // this.players[0].score = gameResource.score;
+      // this.players[0].life = gameResource.life;
+      // playTrack = JSON.parse(gameResource.track);
+    }
 
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
 
@@ -349,8 +405,8 @@ class Gameplay {
 /*
 @game:starting new game and loop
 */
-function startGame(playerNumber) {
-  let game = new Gameplay({ playerNumber });
+function startGame(playerNumber, gameResource = null) {
+  let game = new Gameplay({ playerNumber, gameResource });
   function play() {
     requestAnimationFrame(play);
     game.playgame();
@@ -367,9 +423,23 @@ function mainMenu() {
   let mainMenu = document.getElementById("main_menu");
   let singlePlayerBtn = document.getElementById("single_player_btn");
   let doublePlayerBtn = document.getElementById("double_player_btn");
-  let inputElement = document.getElementById("number");
+  let continueBtn = document.getElementById("continue_btn");
   console.log(inputElement.value, "sdfa");
 
+  continueBtn.addEventListener("click", async () => {
+    if (inputElement.value == "") {
+      showMessage("errorMessage", "Empty number");
+    } else {
+      let data = await getData(inputElement.value);
+      if (data) {
+        mainMenu.style.display = "none";
+        canvas.style.display = "block";
+        startGame(1, data);
+      } else {
+        showMessage("errorMessage", "Cannot find game");
+      }
+    }
+  });
   singlePlayerBtn.addEventListener("click", () => {
     if (inputElement.value == "") {
       showMessage("errorMessage", "Empty number");

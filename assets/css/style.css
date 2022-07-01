@@ -78,3 +78,13 @@ canvas {
   transition: all ease-in-out 1s;
   border-radius: 10px;
 }
+
+#save_btn {
+  position: absolute;
+  background-color: greenyellow;
+  z-index: 10;
+  top: 0px;
+  right: 100px;
+  padding: 10px;
+  border-radius: 25px;
+}
