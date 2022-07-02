@@ -13,7 +13,8 @@ document.body.appendChild(errorMessageElement);
 document.body.appendChild(successMessageElement);
 var gameWinElement = document.getElementById("game_win");
 var gameOverElement = document.getElementById("game_over");
-
+let requestAnimationFrameId;
+let enemyInterval;
 /**
  *
  * @param {number} id -id for number
@@ -85,6 +86,7 @@ function playerDead(player) {
   } else {
     player.position.x = -canvas.width * 10;
     player.position.y = 0;
+    player.velocity.y = -1;
     player.dead = true;
   }
 }
@@ -135,6 +137,7 @@ class Gameplay {
           position: { x: 0, y: 0 },
           size: { width: 50, height: 80 },
           mainPlayer,
+          playerId: i,
         })
       );
     }
@@ -146,7 +149,7 @@ class Gameplay {
       trackArray = JSON.parse(gameResource.track);
     }
     enemies.push(new Enemy({ enemyType: "runningShoot" }));
-    var enemyInterval = setInterval(() => {
+    enemyInterval = setInterval(() => {
       enemies.push(new Enemy({ enemyType: "runningShoot" }));
     }, 6500);
 
@@ -240,6 +243,9 @@ class Gameplay {
             this.players[1].shoot(true);
             break;
           }
+          default: {
+            break;
+          }
         }
       });
 
@@ -269,6 +275,9 @@ class Gameplay {
             this.players[1].shoot(false);
             break;
           }
+          default: {
+            break;
+          }
         }
       });
     }
@@ -282,6 +291,33 @@ class Gameplay {
     this.backgroundImage.drawBackground();
     //creating tracks
     this.trackObj.checkTracks();
+
+    if (this.players[1]) {
+      if (this.players[0].dead && this.players[1].dead) {
+        window.cancelAnimationFrame(requestAnimationFrameId);
+        window.clearInterval(enemyInterval);
+        saveBtn.style.display = "none";
+        canvas.style.display = "none";
+        gameOverElement.style.display = "block";
+        gameOverElement.innerHTML = `<h1>Game over<h2>Player 1:${this.players[0].score}<br>Player2:${this.players[1].score}</h2>`;
+        setTimeout(() => {
+          mainMenuElement.style.display = "block";
+        }, 4000);
+      }
+    } else {
+      //single player dies
+      if (this.players[0].dead) {
+        window.cancelAnimationFrame(requestAnimationFrameId);
+        window.clearInterval(enemyInterval);
+        saveBtn.style.display = "none";
+        canvas.style.display = "none";
+        gameOverElement.style.display = "block";
+        gameOverElement.innerHTML = `<h1>Game over<h1><h2>Player 1:${this.players[0].score}</h2>`;
+        setTimeout(() => {
+          mainMenuElement.style.display = "block";
+        }, 4000);
+      }
+    }
 
     //filtering bullets out of the view
     bullets = bullets.filter((bulletObj) => {
@@ -433,7 +469,7 @@ class Gameplay {
 function startGame(playerNumber, gameResource = null) {
   let game = new Gameplay({ playerNumber, gameResource });
   function play() {
-    requestAnimationFrame(play);
+    requestAnimationFrameId = requestAnimationFrame(play);
     game.playgame();
   }
   play();
@@ -449,7 +485,6 @@ function mainMenu() {
   let singlePlayerBtn = document.getElementById("single_player_btn");
   let doublePlayerBtn = document.getElementById("double_player_btn");
   let continueBtn = document.getElementById("continue_btn");
-  console.log(inputElement.value, "sdfa");
 
   continueBtn.addEventListener("click", async () => {
     if (inputElement.value == "") {
@@ -458,6 +493,8 @@ function mainMenu() {
       let data = await getData(inputElement.value);
       if (data) {
         mainMenuElement.style.display = "none";
+        gameOverElement.style.display = "none";
+        gameWinElement.style.display = "none";
         canvas.style.display = "block";
         startGame(1, data);
       } else {
@@ -469,6 +506,8 @@ function mainMenu() {
     if (inputElement.value == "") {
       showMessage("errorMessage", "Empty number");
     } else {
+      gameOverElement.style.display = "none";
+      gameWinElement.style.display = "none";
       mainMenuElement.style.display = "none";
       canvas.style.display = "block";
       startGame(1);
@@ -478,6 +517,8 @@ function mainMenu() {
     if (inputElement.value == "") {
       showMessage("errorMessage", "Empty number");
     } else {
+      gameOverElement.style.display = "none";
+      gameWinElement.style.display = "none";
       mainMenuElement.style.display = "none";
       canvas.style.display = "block";
       startGame(2);

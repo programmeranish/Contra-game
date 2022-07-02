@@ -49,8 +49,9 @@ function createNewBullet(x, y, { dx, dy, sx, sy }) {
 }
 
 class Player {
-  constructor({ position, size, mainPlayer }) {
+  constructor({ position, size, mainPlayer, playerId }) {
     this.id = "player";
+    this.playerId = playerId;
     this.life = 4;
     this.score = 0;
     this.dead = false;
