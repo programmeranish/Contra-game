@@ -303,6 +303,8 @@ class Gameplay {
         setTimeout(() => {
           mainMenuElement.style.display = "block";
         }, 4000);
+      } else if (this.players[0].dead) {
+        this.players[1].mainPlayer = true;
       }
     } else {
       //single player dies
