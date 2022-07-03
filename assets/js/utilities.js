@@ -1,15 +1,15 @@
-var loadedImages = {};
+let loadedImages = {};
 let onceFlag = true;
 
 /**
  * audio files
  */
-var blastSound = new Audio("./assets/audio/blastsound.wav");
-var bulletSound = new Audio("./assets/audio/bulletsound.wav");
-var shotBotSound = new Audio("./assets/audio/shotbotsound.wav");
-var bulletesSound = new Audio("./assets/audio/bulletsSound.wav");
+let blastSound = new Audio("./assets/audio/blastsound.wav");
+let bulletSound = new Audio("./assets/audio/bulletsound.wav");
+let shotBotSound = new Audio("./assets/audio/shotbotsound.wav");
+let bulletesSound = new Audio("./assets/audio/bulletsSound.wav");
 
-var trackArray = [
+let trackArray = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6],
@@ -25,8 +25,8 @@ var trackArray = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
+let canvas = document.querySelector("canvas");
+let ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

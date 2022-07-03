@@ -1,4 +1,4 @@
-var playTrack = trackArray;
+let playTrack = trackArray;
 
 let trackSourceImage = {
   road: { sx: 100, sy: 100, sw: 60, sh: 60 },

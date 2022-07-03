@@ -1,18 +1,18 @@
-var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-var gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
-var inputElement = document.getElementById("number");
-var mainMenuElement = document.getElementById("main_menu");
+let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+let gradient2 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+let inputElement = document.getElementById("number");
+let mainMenuElement = document.getElementById("main_menu");
 
-var errorMessageElement = document.createElement("div");
+let errorMessageElement = document.createElement("div");
 errorMessageElement.id = "error_message";
 errorMessageElement.style.display = "none";
-var successMessageElement = document.createElement("div");
+let successMessageElement = document.createElement("div");
 successMessageElement.id = "success_message";
 successMessageElement.style.display = "none";
 document.body.appendChild(errorMessageElement);
 document.body.appendChild(successMessageElement);
-var gameWinElement = document.getElementById("game_win");
-var gameOverElement = document.getElementById("game_over");
+let gameWinElement = document.getElementById("game_win");
+let gameOverElement = document.getElementById("game_over");
 let requestAnimationFrameId;
 let enemyInterval;
 /**
@@ -38,16 +38,16 @@ async function getData(id) {
 
 //creating save button
 
-var saveBtn = document.createElement("button");
+let saveBtn = document.createElement("button");
 saveBtn.innerHTML = "Save Game";
 saveBtn.id = "save_btn";
 saveBtn.style.display = "none";
 document.body.appendChild(saveBtn);
 
-var bullets = [];
-var enemies = [];
-var blasts = [];
-var enemyBots = [];
+let bullets = [];
+let enemies = [];
+let blasts = [];
+let enemyBots = [];
 
 function showMessage(type, message) {
   if (type === "errorMessage") {
@@ -490,7 +490,7 @@ function mainMenu() {
 
   continueBtn.addEventListener("click", async () => {
     if (inputElement.value == "") {
-      showMessage("errorMessage", "Empty number");
+      showMessage("errorMessage", "Empty id");
     } else {
       let data = await getData(inputElement.value);
       if (data) {
