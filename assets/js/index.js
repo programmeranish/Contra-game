@@ -15,6 +15,10 @@ let gameWinElement = document.getElementById("game_win");
 let gameOverElement = document.getElementById("game_over");
 let requestAnimationFrameId;
 let enemyInterval;
+//help btn
+document.getElementById("helpBtn").addEventListener("click", () => {
+  document.getElementById("helpImage").classList.toggle("hide");
+});
 /**
  *
  * @param {number} id -id for number

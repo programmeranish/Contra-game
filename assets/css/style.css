@@ -125,3 +125,27 @@ canvas {
 input {
   margin-bottom: 10px;
 }
+#helpBtn {
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  left: 50%;
+  top: 0px;
+  z-index: 200;
+}
+#helpImage {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 100px;
+  left: 0px;
+  z-index: 9999;
+}
+.hide {
+  display: none;
+}
