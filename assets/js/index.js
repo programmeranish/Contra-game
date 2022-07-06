@@ -554,9 +554,9 @@ function displayTrackEditor() {
   //for selecting the list of items
 
   let grass = document.createElement("img");
-  grass.style.height = "30px";
-  grass.style.width = "30px";
-  grass.src = "/assets/images/2.png";
+  grass.style.height = "40px";
+  grass.style.width = "40px";
+  grass.src = "./assets/images/2.png";
   grass.style.position = "absolute";
   grass.style.bottom = "-50px";
   grass.style.left = "0px";
@@ -568,12 +568,12 @@ function displayTrackEditor() {
   gridContainer.appendChild(grass);
 
   let track = document.createElement("img");
-  track.style.height = "30px";
-  track.style.width = "30px";
-  track.src = "/assets/images/1.png";
+  track.style.height = "40px";
+  track.style.width = "40px";
+  track.src = "./assets/images/1.png";
   track.style.position = "absolute";
   track.style.bottom = "-50px";
-  track.style.left = "30px";
+  track.style.left = "40px";
 
   track.addEventListener("click", () => {
     selectedId = 1;
@@ -582,9 +582,9 @@ function displayTrackEditor() {
   gridContainer.appendChild(track);
 
   let wall = document.createElement("img");
-  wall.style.height = "30px";
-  wall.style.width = "30px";
-  wall.src = "/assets/images/9.png";
+  wall.style.height = "40px";
+  wall.style.width = "40px";
+  wall.src = "./assets/images/9.png";
   wall.style.position = "absolute";
   wall.style.bottom = "-50px";
   wall.style.left = "120px";
@@ -596,9 +596,9 @@ function displayTrackEditor() {
   gridContainer.appendChild(wall);
 
   let enemyBot = document.createElement("img");
-  enemyBot.style.height = "30px";
-  enemyBot.style.width = "30px";
-  enemyBot.src = "/assets/images/6.png";
+  enemyBot.style.height = "40px";
+  enemyBot.style.width = "40px";
+  enemyBot.src = "./assets/images/6.png";
   enemyBot.style.position = "absolute";
   enemyBot.style.bottom = "-50px";
   enemyBot.style.left = "180px";
@@ -610,9 +610,9 @@ function displayTrackEditor() {
   gridContainer.appendChild(enemyBot);
 
   let bridge = document.createElement("img");
-  bridge.style.height = "30px";
-  bridge.style.width = "30px";
-  bridge.src = "/assets/images/4.png";
+  bridge.style.height = "40px";
+  bridge.style.width = "40px";
+  bridge.src = "./assets/images/4.png";
   bridge.style.position = "absolute";
   bridge.style.bottom = "-50px";
   bridge.style.left = "240px";
@@ -624,9 +624,9 @@ function displayTrackEditor() {
   gridContainer.appendChild(bridge);
 
   let bridgeStart = document.createElement("img");
-  bridgeStart.style.height = "30px";
-  bridgeStart.style.width = "30px";
-  bridgeStart.src = "/assets/images/3.png";
+  bridgeStart.style.height = "40px";
+  bridgeStart.style.width = "40px";
+  bridgeStart.src = "./assets/images/3.png";
   bridgeStart.style.position = "absolute";
   bridgeStart.style.bottom = "-50px";
   bridgeStart.style.left = "300px";
@@ -638,9 +638,9 @@ function displayTrackEditor() {
   gridContainer.appendChild(bridgeStart);
 
   let bridgeEnd = document.createElement("img");
-  bridgeEnd.style.height = "30px";
-  bridgeEnd.style.width = "30px";
-  bridgeEnd.src = "/assets/images/5.png";
+  bridgeEnd.style.height = "40px";
+  bridgeEnd.style.width = "40px";
+  bridgeEnd.src = "./assets/images/5.png";
   bridgeEnd.style.position = "absolute";
   bridgeEnd.style.bottom = "-50px";
   bridgeEnd.style.left = "360px";
