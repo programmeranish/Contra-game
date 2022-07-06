@@ -149,3 +149,6 @@ input {
 .hide {
   display: none;
 }
+#track_editor_page {
+  display: none;
+}
